@@ -1,7 +1,7 @@
 import SwiftData
 import SwiftUI
 
-extension ContentView {
+extension HomeScreen {
     @Observable
     class ViewModel {
         

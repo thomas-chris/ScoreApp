@@ -2,7 +2,7 @@ import Observation
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct HomeScreen: View {
     let viewModel: ViewModel?
     
     init(viewModel: ViewModel?) {

@@ -7,7 +7,7 @@ class MainCoordinator: AppCoordinator {
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
         self.path = NavigationPath()
-        self.contentViewModel = ContentView.ViewModel(coordinator: self)
+        self.contentViewModel = HomeScreen.ViewModel(coordinator: self)
     }
     
     var modelContext: ModelContext
@@ -18,7 +18,7 @@ class MainCoordinator: AppCoordinator {
         }
     }
     
-    @Published var contentViewModel: ContentView.ViewModel?
+    @Published var contentViewModel: HomeScreen.ViewModel?
     @Published var path: NavigationPath
     @Published var sheet: Sheet?
     
@@ -43,7 +43,7 @@ class MainCoordinator: AppCoordinator {
     }
     
     func showGame(_ game: Game) {
-        
+        push(.gameDetail(game))
     }
     
     func add(game: Game) {
@@ -76,9 +76,9 @@ extension MainCoordinator {
     func build(_ screen: Screen) -> some View {
         switch screen {
             case .home:
-                ContentView(viewModel: contentViewModel)
-            case .gameDetail(named: let game):
-                EmptyView() // Replace with actual game view
+                HomeScreen(viewModel: contentViewModel)
+            case .gameDetail(_):
+                GameScreen() // Replace with actual game view
         }
     }
     
