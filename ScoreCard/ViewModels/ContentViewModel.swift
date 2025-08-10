@@ -5,22 +5,34 @@ extension ContentView {
     @Observable
     class ViewModel {
         
-        private unowned let coordinator: Coordinator
+        var games: [Game] = []
+        var newGameName = ""
+        weak var coordinator: MainCoordinator?
         
-        init(coordinator: Coordinator) {
+        init(coordinator: MainCoordinator) {
             self.coordinator = coordinator
         }
         
-        func addGame() {
-            coordinator.addGame()
+        func createGame() {
+            coordinator?.presentSheet(.createGame)
         }
         
-        func add(game: Game) {
-            coordinator.add(game: game)
+        func dismissAlert() {
+            
         }
         
-        func fetchData() {
-            coordinator.fetchData()
+        func delete(at offsets: IndexSet) {
+            coordinator?.delete(at: offsets)
+            refresh()
+        }
+        
+        func showGame(_ game: Game) {
+            coordinator?.showGame(game)
+        }
+        
+        func refresh() {
+            coordinator?.fetchData()
+            games = coordinator?.games ?? []
         }
     }
 }

@@ -14,9 +14,9 @@ struct ScoreCardApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CoordinatorView(mainCoordinator: MainCoordinator(modelContext: container.mainContext))
         }
-        .environmentObject(Coordinator(modelContext: container.mainContext))
+        
     }
     
     init() {
