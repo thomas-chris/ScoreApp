@@ -11,7 +11,7 @@ struct HomeScreen: View {
     
     var body: some View {
         List {
-            ForEach(viewModel?.games ?? []) { game in
+            ForEach(viewModel?.games ?? [], id: \.id) { game in
                 Text(game.name)
                     .onTapGesture {
                         viewModel?.showGame(game)

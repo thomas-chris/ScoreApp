@@ -23,7 +23,7 @@ struct ScoreCardApp: App {
         do {
             container = try ModelContainer(for: Game.self)
         } catch {
-            fatalError("Failed to create ModelContainer for Movie.")
+            fatalError("Failed to create ModelContainer for Game.")
         }
     }
 }
