@@ -18,7 +18,7 @@ class MainCoordinator: AppCoordinator {
     init(gameService: any Service<Game>) {
         self.gameService = gameService
         self.path = NavigationPath()
-        self.contentViewModel = HomeScreen.ViewModel(coordinator: self)
+        self.contentViewModel = HomeScreen.ViewModel(coordinator: self, gameService: gameService)
     }
     
     func push(_ screen: Screen) {
@@ -44,23 +44,7 @@ class MainCoordinator: AppCoordinator {
     func showGame(_ game: Game) {
         push(.gameDetail(game))
     }
-    
-    func add(game: Game) {
-        games.append(game)
-        gameService.insert(game)
-    }
-    
-    func delete(at offsets: IndexSet) {
-        for offset in offsets {
-            let game = games[offset]
-            gameService.delete(game)
-        }
-        games.remove(atOffsets: offsets)
-    }
-    
-    func fetchData() {
-        games = gameService.fetchData()
-    }
+
 }
 
 extension MainCoordinator {
@@ -79,7 +63,7 @@ extension MainCoordinator {
     func build(_ sheet: Sheet) -> some View {
         switch sheet {
             case Sheet.createGame:
-                AddGameSheet(viewModel: .init(coordinator: self))
+                AddGameSheet(viewModel: .init(coordinator: self, gameService: gameService))
         }
     }
 }

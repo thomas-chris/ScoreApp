@@ -7,12 +7,13 @@ extension AddGameSheet {
         var newGameName = ""
         var gameType: GameType = .highScoreWins
         var value: Int = 0
-        
+        var gameService: any Service<Game>
         // Using a weak reference to avoid strong reference cycles
         weak var coordinator: MainCoordinator?
         
-        init(coordinator: MainCoordinator) {
+        init(coordinator: MainCoordinator, gameService: any Service<Game>) {
             self.coordinator = coordinator
+            self.gameService = gameService
         }
         
         func add() {
@@ -25,7 +26,7 @@ extension AddGameSheet {
                     )
                 )
             )
-            coordinator?.add(game: game)
+            gameService.insert(game)
             coordinator?.dismissSheet()
         }
         

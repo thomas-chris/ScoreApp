@@ -8,9 +8,11 @@ extension HomeScreen {
         var games: [Game] = []
         var newGameName = ""
         weak var coordinator: MainCoordinator?
+        let gameService: any Service<Game>
         
-        init(coordinator: MainCoordinator) {
+        init(coordinator: MainCoordinator, gameService: any Service<Game>) {
             self.coordinator = coordinator
+            self.gameService = gameService
         }
         
         func createGame() {
@@ -22,8 +24,11 @@ extension HomeScreen {
         }
         
         func delete(at offsets: IndexSet) {
-            coordinator?.delete(at: offsets)
-            refresh()
+            for offset in offsets {
+                let game = games[offset]
+                gameService.delete(game)
+            }
+            games.remove(atOffsets: offsets)
         }
         
         func showGame(_ game: Game) {
@@ -31,8 +36,7 @@ extension HomeScreen {
         }
         
         func refresh() {
-            coordinator?.fetchData()
-            games = coordinator?.games ?? []
+            games = gameService.fetchData()
         }
     }
 }

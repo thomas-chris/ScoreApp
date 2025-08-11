@@ -6,7 +6,7 @@ import Testing
 struct HomeScreenViewModelTests {
     @Test func testInitialization() {
         let coordinator = MainCoordinator(gameService: MockGameService())
-        let viewModel = HomeScreen.ViewModel(coordinator: coordinator)
+        let viewModel = HomeScreen.ViewModel(coordinator: coordinator, gameService: MockGameService())
         #expect(viewModel.games.isEmpty)
         #expect(viewModel.newGameName == "")
         #expect(viewModel.coordinator === coordinator)
@@ -19,28 +19,22 @@ struct HomeScreenViewModelTests {
                 didPresentSheet = true
             }
         }
-        let coordinator = TestCoordinator(gameService: MockGameService())
-        let viewModel = HomeScreen.ViewModel(coordinator: coordinator)
+        let gameService = MockGameService()
+        let coordinator = TestCoordinator(gameService: gameService)
+        let viewModel = HomeScreen.ViewModel(coordinator: coordinator, gameService: gameService)
         viewModel.createGame()
         #expect(coordinator.didPresentSheet)
     }
     
     @Test func testDeleteCallsCoordinatorAndRefresh() {
-        class TestCoordinator: MainCoordinator {
-            var didDelete = false
-            override func delete(at offsets: IndexSet) {
-                didDelete = true
-            }
-            override func fetchData() {
-                games = [Game(name: "TestGame", ruleSet: .default)]
-            }
-        }
-        let coordinator = TestCoordinator(gameService: MockGameService())
-        let viewModel = HomeScreen.ViewModel(coordinator: coordinator)
+        let gameService = MockGameService()
+        gameService.returns.fetchData = [Game(name: "TestGame", ruleSet: .default)]
+        let coordinator = MainCoordinator(gameService: gameService)
+        let viewModel = HomeScreen.ViewModel(coordinator: coordinator, gameService: gameService)
+        viewModel.refresh() // Load initial data
         viewModel.delete(at: IndexSet(integer: 0))
-        #expect(coordinator.didDelete)
-        #expect(viewModel.games.count == 1)
-        #expect(viewModel.games.first?.name == "TestGame")
+        #expect(gameService.invocations.delete.count == 1)
+        #expect(viewModel.games.count == 0)
     }
     
     @Test func testShowGameCallsCoordinator() {
@@ -50,22 +44,11 @@ struct HomeScreenViewModelTests {
                 didShowGame = true
             }
         }
-        let coordinator = TestCoordinator(gameService: MockGameService())
-        let viewModel = HomeScreen.ViewModel(coordinator: coordinator)
+        let gameService = MockGameService()
+        let coordinator = TestCoordinator(gameService: gameService)
+        let viewModel = HomeScreen.ViewModel(coordinator: coordinator, gameService: gameService)
         let game = Game(name: "ShowMe", ruleSet: .default)
         viewModel.showGame(game)
         #expect(coordinator.didShowGame)
-    }
-    
-    @Test func testRefreshUpdatesGamesFromCoordinator() {
-        let coordinator = MainCoordinator(gameService: MockGameService())
-        
-        coordinator.add(game: Game(name: "A", ruleSet: .default))
-        coordinator.add(game: Game(name: "B", ruleSet: .default))
-        let viewModel = HomeScreen.ViewModel(coordinator: coordinator)
-        viewModel.refresh()
-        #expect(viewModel.games.count == 2)
-        #expect(viewModel.games.map { $0.name }.contains("A"))
-        #expect(viewModel.games.map { $0.name }.contains("B"))
     }
 }

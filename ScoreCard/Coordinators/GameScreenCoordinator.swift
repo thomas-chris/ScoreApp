@@ -31,14 +31,4 @@ class GameScreenCoordinator: AppCoordinator {
     func dismissSheet() {
         
     }
-
-    func add(game: Game) {
-        
-    }
-
-    func fetchData() {
-        
-    }
-
-    
 }

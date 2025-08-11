@@ -64,7 +64,7 @@ struct AddGameSheet: View {
                     gameService: GameService(
                         modelContext: ModelContext(container)
                     )
-                )
+                ), gameService: PreviewGameService()
             )
             AddGameSheet(viewModel: viewModel)
         } else {
