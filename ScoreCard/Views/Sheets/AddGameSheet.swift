@@ -57,12 +57,18 @@ struct AddGameSheet: View {
 }
 
 #Preview {
-    do {
-        let container = try ModelContainer(for: Game.self)
-        let viewModel = AddGameSheet.ViewModel(coordinator: MainCoordinator(modelContext: ModelContext(container)))
-        return AddGameSheet(viewModel: viewModel)
-    } catch {
-        print("Failed to create model container: \(error)")
-        return AnyView(Text("Error creating model container"))
+    Group {
+        if let container = try? ModelContainer(for: Game.self) {
+            let viewModel = AddGameSheet.ViewModel(
+                coordinator: MainCoordinator(
+                    gameService: GameService(
+                        modelContext: ModelContext(container)
+                    )
+                )
+            )
+            AddGameSheet(viewModel: viewModel)
+        } else {
+            AnyView(Text("Model container not available"))
+        }
     }
 }

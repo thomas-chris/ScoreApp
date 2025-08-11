@@ -5,7 +5,7 @@ import Testing
 
 struct HomeScreenViewModelTests {
     @Test func testInitialization() {
-        let coordinator = MainCoordinator(modelContext: ModelContext(try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))))
+        let coordinator = MainCoordinator(gameService: MockGameService())
         let viewModel = HomeScreen.ViewModel(coordinator: coordinator)
         #expect(viewModel.games.isEmpty)
         #expect(viewModel.newGameName == "")
@@ -19,7 +19,7 @@ struct HomeScreenViewModelTests {
                 didPresentSheet = true
             }
         }
-        let coordinator = TestCoordinator(modelContext: ModelContext(try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))))
+        let coordinator = TestCoordinator(gameService: MockGameService())
         let viewModel = HomeScreen.ViewModel(coordinator: coordinator)
         viewModel.createGame()
         #expect(coordinator.didPresentSheet)
@@ -35,7 +35,7 @@ struct HomeScreenViewModelTests {
                 games = [Game(name: "TestGame", ruleSet: .default)]
             }
         }
-        let coordinator = TestCoordinator(modelContext: ModelContext(try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))))
+        let coordinator = TestCoordinator(gameService: MockGameService())
         let viewModel = HomeScreen.ViewModel(coordinator: coordinator)
         viewModel.delete(at: IndexSet(integer: 0))
         #expect(coordinator.didDelete)
@@ -50,7 +50,7 @@ struct HomeScreenViewModelTests {
                 didShowGame = true
             }
         }
-        let coordinator = TestCoordinator(modelContext: ModelContext(try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))))
+        let coordinator = TestCoordinator(gameService: MockGameService())
         let viewModel = HomeScreen.ViewModel(coordinator: coordinator)
         let game = Game(name: "ShowMe", ruleSet: .default)
         viewModel.showGame(game)
@@ -58,7 +58,7 @@ struct HomeScreenViewModelTests {
     }
     
     @Test func testRefreshUpdatesGamesFromCoordinator() {
-        let coordinator = MainCoordinator(modelContext: ModelContext(try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))))
+        let coordinator = MainCoordinator(gameService: MockGameService())
         
         coordinator.add(game: Game(name: "A", ruleSet: .default))
         coordinator.add(game: Game(name: "B", ruleSet: .default))

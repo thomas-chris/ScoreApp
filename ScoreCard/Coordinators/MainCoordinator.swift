@@ -7,7 +7,7 @@ class MainCoordinator: AppCoordinator {
     @Published var path: NavigationPath
     @Published var sheet: Sheet?
     
-    var modelContext: ModelContext
+    let gameService: any Service<Game>
     let parentCoordinator: (any AppCoordinator)? = nil
     var games = [Game]() {
         didSet {
@@ -15,8 +15,8 @@ class MainCoordinator: AppCoordinator {
         }
     }
     
-    init(modelContext: ModelContext) {
-        self.modelContext = modelContext
+    init(gameService: any Service<Game>) {
+        self.gameService = gameService
         self.path = NavigationPath()
         self.contentViewModel = HomeScreen.ViewModel(coordinator: self)
     }
@@ -46,26 +46,20 @@ class MainCoordinator: AppCoordinator {
     }
     
     func add(game: Game) {
-        modelContext.insert(game)
-        fetchData()
+        games.append(game)
+        gameService.insert(game)
     }
     
     func delete(at offsets: IndexSet) {
         for offset in offsets {
             let game = games[offset]
-            modelContext.delete(game)
+            gameService.delete(game)
         }
         games.remove(atOffsets: offsets)
-        try? modelContext.save()
     }
     
     func fetchData() {
-        do {
-            let descriptor = FetchDescriptor<Game>(sortBy: [SortDescriptor(\.name)])
-            games = try modelContext.fetch(descriptor)
-        } catch {
-            print("Fetch failed")
-        }
+        games = gameService.fetchData()
     }
 }
 
