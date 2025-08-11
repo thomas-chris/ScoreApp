@@ -3,12 +3,9 @@ import SwiftUI
 import Combine
 
 class MainCoordinator: AppCoordinator {
-    
-    init(modelContext: ModelContext) {
-        self.modelContext = modelContext
-        self.path = NavigationPath()
-        self.contentViewModel = HomeScreen.ViewModel(coordinator: self)
-    }
+    @Published var contentViewModel: HomeScreen.ViewModel?
+    @Published var path: NavigationPath
+    @Published var sheet: Sheet?
     
     var modelContext: ModelContext
     let parentCoordinator: (any AppCoordinator)? = nil
@@ -18,9 +15,11 @@ class MainCoordinator: AppCoordinator {
         }
     }
     
-    @Published var contentViewModel: HomeScreen.ViewModel?
-    @Published var path: NavigationPath
-    @Published var sheet: Sheet?
+    init(modelContext: ModelContext) {
+        self.modelContext = modelContext
+        self.path = NavigationPath()
+        self.contentViewModel = HomeScreen.ViewModel(coordinator: self)
+    }
     
     func push(_ screen: Screen) {
         path.append(screen)
@@ -77,8 +76,8 @@ extension MainCoordinator {
         switch screen {
             case .home:
                 HomeScreen(viewModel: contentViewModel)
-            case .gameDetail(_):
-                GameScreen() // Replace with actual game view
+            case .gameDetail(let game):
+                GameScreen(viewModel: GameScreen.ViewModel(game: game, coordinator: self))
         }
     }
     

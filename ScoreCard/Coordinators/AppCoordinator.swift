@@ -10,7 +10,4 @@ protocol AppCoordinator: ObservableObject {
     func pop()
     func popToRoot()
     func dismissSheet()
-    
-    func add(game: Game)
-    func fetchData()
 }

@@ -9,9 +9,9 @@ extension AddGameSheet {
         var value: Int = 0
         
         // Using a weak reference to avoid strong reference cycles
-        weak var coordinator: (any AppCoordinator)?
+        weak var coordinator: MainCoordinator?
         
-        init(coordinator: any AppCoordinator) {
+        init(coordinator: MainCoordinator) {
             self.coordinator = coordinator
         }
         

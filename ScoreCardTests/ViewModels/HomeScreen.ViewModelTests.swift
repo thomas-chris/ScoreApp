@@ -32,7 +32,7 @@ struct HomeScreenViewModelTests {
                 didDelete = true
             }
             override func fetchData() {
-                games = [Game(name: "TestGame")]
+                games = [Game(name: "TestGame", ruleSet: .default)]
             }
         }
         let coordinator = TestCoordinator(modelContext: ModelContext(try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))))
@@ -52,7 +52,7 @@ struct HomeScreenViewModelTests {
         }
         let coordinator = TestCoordinator(modelContext: ModelContext(try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))))
         let viewModel = HomeScreen.ViewModel(coordinator: coordinator)
-        let game = Game(name: "ShowMe")
+        let game = Game(name: "ShowMe", ruleSet: .default)
         viewModel.showGame(game)
         #expect(coordinator.didShowGame)
     }
@@ -60,8 +60,8 @@ struct HomeScreenViewModelTests {
     @Test func testRefreshUpdatesGamesFromCoordinator() {
         let coordinator = MainCoordinator(modelContext: ModelContext(try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))))
         
-        coordinator.add(game: Game(name: "A"))
-        coordinator.add(game: Game(name: "B"))
+        coordinator.add(game: Game(name: "A", ruleSet: .default))
+        coordinator.add(game: Game(name: "B", ruleSet: .default))
         let viewModel = HomeScreen.ViewModel(coordinator: coordinator)
         viewModel.refresh()
         #expect(viewModel.games.count == 2)
