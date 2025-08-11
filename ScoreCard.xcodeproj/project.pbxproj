@@ -14,19 +14,11 @@
 			remoteGlobalIDString = 3E9FECB42E47901C00C0920F;
 			remoteInfo = ScoreCard;
 		};
-		3E9FECCF2E47901F00C0920F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3E9FECAD2E47901C00C0920F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3E9FECB42E47901C00C0920F;
-			remoteInfo = ScoreCard;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3E9FECB52E47901C00C0920F /* ScoreCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoreCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E9FECC42E47901F00C0920F /* ScoreCardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScoreCardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E9FECCE2E47901F00C0920F /* ScoreCardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScoreCardUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -38,11 +30,6 @@
 		3E9FECC72E47901F00C0920F /* ScoreCardTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ScoreCardTests;
-			sourceTree = "<group>";
-		};
-		3E9FECD12E47901F00C0920F /* ScoreCardUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ScoreCardUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -62,13 +49,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3E9FECCB2E47901F00C0920F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -77,7 +57,6 @@
 			children = (
 				3E9FECB72E47901C00C0920F /* ScoreCard */,
 				3E9FECC72E47901F00C0920F /* ScoreCardTests */,
-				3E9FECD12E47901F00C0920F /* ScoreCardUITests */,
 				3E9FECB62E47901C00C0920F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,7 +66,6 @@
 			children = (
 				3E9FECB52E47901C00C0920F /* ScoreCard.app */,
 				3E9FECC42E47901F00C0920F /* ScoreCardTests.xctest */,
-				3E9FECCE2E47901F00C0920F /* ScoreCardUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,29 +118,6 @@
 			productReference = 3E9FECC42E47901F00C0920F /* ScoreCardTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3E9FECCD2E47901F00C0920F /* ScoreCardUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3E9FECDE2E47901F00C0920F /* Build configuration list for PBXNativeTarget "ScoreCardUITests" */;
-			buildPhases = (
-				3E9FECCA2E47901F00C0920F /* Sources */,
-				3E9FECCB2E47901F00C0920F /* Frameworks */,
-				3E9FECCC2E47901F00C0920F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3E9FECD02E47901F00C0920F /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				3E9FECD12E47901F00C0920F /* ScoreCardUITests */,
-			);
-			name = ScoreCardUITests;
-			packageProductDependencies = (
-			);
-			productName = ScoreCardUITests;
-			productReference = 3E9FECCE2E47901F00C0920F /* ScoreCardUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -177,10 +132,6 @@
 						CreatedOnToolsVersion = 16.4;
 					};
 					3E9FECC32E47901F00C0920F = {
-						CreatedOnToolsVersion = 16.4;
-						TestTargetID = 3E9FECB42E47901C00C0920F;
-					};
-					3E9FECCD2E47901F00C0920F = {
 						CreatedOnToolsVersion = 16.4;
 						TestTargetID = 3E9FECB42E47901C00C0920F;
 					};
@@ -202,7 +153,6 @@
 			targets = (
 				3E9FECB42E47901C00C0920F /* ScoreCard */,
 				3E9FECC32E47901F00C0920F /* ScoreCardTests */,
-				3E9FECCD2E47901F00C0920F /* ScoreCardUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -216,13 +166,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3E9FECC22E47901F00C0920F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3E9FECCC2E47901F00C0920F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -246,13 +189,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3E9FECCA2E47901F00C0920F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -260,11 +196,6 @@
 			isa = PBXTargetDependency;
 			target = 3E9FECB42E47901C00C0920F /* ScoreCard */;
 			targetProxy = 3E9FECC52E47901F00C0920F /* PBXContainerItemProxy */;
-		};
-		3E9FECD02E47901F00C0920F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3E9FECB42E47901C00C0920F /* ScoreCard */;
-			targetProxy = 3E9FECCF2E47901F00C0920F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -484,40 +415,6 @@
 			};
 			name = Release;
 		};
-		3E9FECDF2E47901F00C0920F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4677LHHJ5F;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.johnlewis.pdpSwiftUIDemo.ScoreCardUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ScoreCard;
-			};
-			name = Debug;
-		};
-		3E9FECE02E47901F00C0920F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4677LHHJ5F;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.johnlewis.pdpSwiftUIDemo.ScoreCardUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ScoreCard;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -544,15 +441,6 @@
 			buildConfigurations = (
 				3E9FECDC2E47901F00C0920F /* Debug */,
 				3E9FECDD2E47901F00C0920F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3E9FECDE2E47901F00C0920F /* Build configuration list for PBXNativeTarget "ScoreCardUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3E9FECDF2E47901F00C0920F /* Debug */,
-				3E9FECE02E47901F00C0920F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
