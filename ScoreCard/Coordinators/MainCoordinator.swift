@@ -48,7 +48,7 @@ class MainCoordinator: AppCoordinator {
     }
     
     func showPlayer(_ player: Player) {
-        // Future implementation for showing player details
+        print("Show player detail not implemented yet")
     }
     
     func switchTab(_ index: Int) {

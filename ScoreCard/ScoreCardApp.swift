@@ -10,18 +10,17 @@ import SwiftData
 
 @main
 struct ScoreCardApp: App {
-    let gameContainer: ModelContainer
-    let playerContainer: ModelContainer
+    let container: ModelContainer
     
     var body: some Scene {
         WindowGroup {
             CoordinatorView(
                 mainCoordinator: MainCoordinator(
                     gameService : GameService(
-                        modelContext: gameContainer.mainContext
+                        modelContext: container.mainContext
                     ),
                     playerService: PlayerService(
-                        modelContext: playerContainer.mainContext
+                        modelContext: container.mainContext
                     )
                 )
             )
@@ -31,8 +30,13 @@ struct ScoreCardApp: App {
     
     init() {
         do {
-            gameContainer = try ModelContainer(for: Game.self)
-            playerContainer = try ModelContainer(for: Player.self)
+            let schema = Schema([
+                Game.self,
+                Player.self,
+            ])
+            let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+
+            container = try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
             fatalError("Failed to create ModelContainer for Game.")
         }
