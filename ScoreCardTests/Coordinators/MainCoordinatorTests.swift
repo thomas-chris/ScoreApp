@@ -7,7 +7,7 @@ struct MainCoordinatorTests {
     @Test func testInitialization() {
         let container = try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
         let coordinator = MainCoordinator(gameService: MockGameService())
-        #expect(coordinator.contentViewModel != nil)
+        #expect(coordinator.gamesViewModel != nil)
         #expect(coordinator.games.count == 0)
         #expect(coordinator.path.count == 0)
         #expect(coordinator.sheet == nil)

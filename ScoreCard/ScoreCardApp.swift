@@ -18,6 +18,9 @@ struct ScoreCardApp: App {
                 mainCoordinator: MainCoordinator(
                     gameService : GameService(
                         modelContext: container.mainContext
+                    ),
+                    playerService: PlayerService(
+                        modelContext: container.mainContext
                     )
                 )
             )
