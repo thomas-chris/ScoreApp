@@ -34,8 +34,7 @@ struct AddPlayerSheet: View {
                 Button(
                     "Add"
                 ) {
-                    viewModel
-                        .add()
+                    viewModel.add()
                 }
                 .disabled(
                     viewModel.newPlayerName.trimmingCharacters(

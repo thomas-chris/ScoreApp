@@ -7,15 +7,11 @@ class MainCoordinator: AppCoordinator {
     @Published var playerViewModel: PlayersScreen.ViewModel?
     @Published var path: NavigationPath
     @Published var sheet: Sheet?
+    @Published var selectedTab: Int = 0
     
     let gameService: any Service<Game>
     let playerService: any Service<Player>
     let parentCoordinator: (any AppCoordinator)? = nil
-    var games = [Game]() {
-        didSet {
-            gamesViewModel?.games = games
-        }
-    }
     
     init(gameService: any Service<Game>, playerService: any Service<Player>) {
         self.gameService = gameService
@@ -43,6 +39,8 @@ class MainCoordinator: AppCoordinator {
     
     func dismissSheet() {
         self.sheet = nil
+        gamesViewModel?.refresh()
+        playerViewModel?.refresh()
     }
     
     func showGame(_ game: Game) {
@@ -51,6 +49,10 @@ class MainCoordinator: AppCoordinator {
     
     func showPlayer(_ player: Player) {
         // Future implementation for showing player details
+    }
+    
+    func switchTab(_ index: Int) {
+        selectedTab = index
     }
 
 }

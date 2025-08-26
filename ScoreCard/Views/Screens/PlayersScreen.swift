@@ -12,7 +12,7 @@ struct PlayersScreen: View {
             ForEach(viewModel?.players ?? [], id: \.id) { player in
                 Text(player.name)
                     .onTapGesture {
-//                        viewModel?.showGame(player)
+                        viewModel?.showPlayer(player)
                     }
             }
             .onDelete { offsets in

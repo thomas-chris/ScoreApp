@@ -10,4 +10,5 @@ protocol AppCoordinator: ObservableObject {
     func pop()
     func popToRoot()
     func dismissSheet()
+    func switchTab(_ index: Int)
 }
