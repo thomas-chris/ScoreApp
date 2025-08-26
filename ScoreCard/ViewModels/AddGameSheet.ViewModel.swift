@@ -5,25 +5,31 @@ extension AddGameSheet {
     class ViewModel {
         
         var newGameName = ""
+        var minNumberOfPlayers = "2"
+        var maxNumberOfPlayers = "8"
         var gameType: GameType = .highScoreWins
         var value: Int = 0
         var gameService: any Service<Game>
         // Using a weak reference to avoid strong reference cycles
-        weak var coordinator: MainCoordinator?
+        weak var coordinator: GameCoordinator?
         
-        init(coordinator: MainCoordinator, gameService: any Service<Game>) {
+        init(coordinator: GameCoordinator, gameService: any Service<Game>) {
             self.coordinator = coordinator
             self.gameService = gameService
         }
         
         func add() {
+            let minNumberOfPlayers = Int(minNumberOfPlayers) ?? 2
+            let maxNumberOfPlayers = Int(maxNumberOfPlayers) ?? 8
             let game = Game(
                 name: newGameName.trimmingCharacters(in: .whitespacesAndNewlines),
                 ruleSet: RuleSet(
                     gameType: .init(
                         from: gameType,
                         value: value
-                    )
+                    ),
+                    minNumberOfPlayers: minNumberOfPlayers,
+                    maxNumberOfPlayers: maxNumberOfPlayers
                 )
             )
             gameService.insert(game)

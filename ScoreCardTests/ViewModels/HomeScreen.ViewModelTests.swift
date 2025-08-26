@@ -5,7 +5,7 @@ import Testing
 
 struct HomeScreenViewModelTests {
     @Test func testInitialization() {
-        let coordinator = MainCoordinator(gameService: MockGameService())
+        let coordinator = GameCoordinator(gameService: MockGameService())
         let viewModel = HomeScreen.ViewModel(coordinator: coordinator, gameService: MockGameService())
         #expect(viewModel.games.isEmpty)
         #expect(viewModel.newGameName == "")
@@ -13,7 +13,7 @@ struct HomeScreenViewModelTests {
     }
     
     @Test func testCreateGameCallsCoordinator() {
-        class TestCoordinator: MainCoordinator {
+        class TestCoordinator: GameCoordinator {
             var didPresentSheet = false
             override func presentSheet(_ sheet: Sheet) {
                 didPresentSheet = true
@@ -29,7 +29,7 @@ struct HomeScreenViewModelTests {
     @Test func testDeleteCallsCoordinatorAndRefresh() {
         let gameService = MockGameService()
         gameService.returns.fetchData = [Game(name: "TestGame", ruleSet: .default)]
-        let coordinator = MainCoordinator(gameService: gameService)
+        let coordinator = GameCoordinator(gameService: gameService)
         let viewModel = HomeScreen.ViewModel(coordinator: coordinator, gameService: gameService)
         viewModel.refresh() // Load initial data
         viewModel.delete(at: IndexSet(integer: 0))
@@ -38,7 +38,7 @@ struct HomeScreenViewModelTests {
     }
     
     @Test func testShowGameCallsCoordinator() {
-        class TestCoordinator: MainCoordinator {
+        class TestCoordinator: GameCoordinator {
             var didShowGame = false
             override func showGame(_ game: Game) {
                 didShowGame = true

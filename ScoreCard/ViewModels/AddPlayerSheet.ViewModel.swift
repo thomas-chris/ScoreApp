@@ -8,9 +8,9 @@ extension AddPlayerSheet {
        
         var playerService: any Service<Player>
         // Using a weak reference to avoid strong reference cycles
-        weak var coordinator: MainCoordinator?
+        weak var coordinator: PlayerCoordinator?
         
-        init(coordinator: MainCoordinator, playerService: any Service<Player>) {
+        init(coordinator: PlayerCoordinator, playerService: any Service<Player>) {
             self.coordinator = coordinator
             self.playerService = playerService
         }

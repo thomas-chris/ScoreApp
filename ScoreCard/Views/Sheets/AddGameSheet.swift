@@ -58,6 +58,21 @@ struct AddGameSheet: View {
                 RoundedBorderTextFieldStyle()
             )
             .padding()
+            TextField(
+                "Minimum number of players",
+                text: $viewModel.minNumberOfPlayers
+            )
+            .textFieldStyle(
+                RoundedBorderTextFieldStyle()
+            )
+            TextField(
+                "Maximum number of players",
+                text: $viewModel.maxNumberOfPlayers
+            )
+            .textFieldStyle(
+                RoundedBorderTextFieldStyle()
+            )
+        
             HStack {
                 Text(
                     subtitle
@@ -119,7 +134,7 @@ struct AddGameSheet: View {
             for: Game.self
         ) {
             let viewModel = AddGameSheet.ViewModel(
-                coordinator: MainCoordinator(
+                coordinator: GameCoordinator(
                     gameService: PreviewGameService(),
                     playerService: PreviewPlayerService()
                 ),

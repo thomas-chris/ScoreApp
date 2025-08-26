@@ -58,7 +58,7 @@ struct AddPlayerSheet: View {
             for: Game.self
         ) {
             let viewModel = AddPlayerSheet.ViewModel(
-                coordinator: MainCoordinator(
+                coordinator: PlayerCoordinator(
                     gameService: PreviewGameService(),
                     playerService: PreviewPlayerService()
                 ),

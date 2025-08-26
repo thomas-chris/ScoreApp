@@ -18,6 +18,8 @@ import SwiftData
 @Model class RuleSet {
     @Attribute(.unique) var id: UUID
     var gameType: GameType
+    var minNumberOfPlayers: Int
+    var maxNumberOfPlayers: Int
     
     enum GameType: Codable, Hashable {
         case highScoreWins(Int)
@@ -25,8 +27,10 @@ import SwiftData
         case rounds(Int)
     }
     
-    init(gameType: GameType, id: UUID = UUID()) {
+    init(gameType: GameType, minNumberOfPlayers: Int, maxNumberOfPlayers: Int, id: UUID = UUID()) {
         self.gameType = gameType
+        self.minNumberOfPlayers = minNumberOfPlayers
+        self.maxNumberOfPlayers = maxNumberOfPlayers
         self.id = id
     }
 }

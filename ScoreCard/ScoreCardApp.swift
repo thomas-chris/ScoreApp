@@ -14,16 +14,34 @@ struct ScoreCardApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CoordinatorView(
-                mainCoordinator: MainCoordinator(
-                    gameService : GameService(
-                        modelContext: container.mainContext
-                    ),
-                    playerService: PlayerService(
-                        modelContext: container.mainContext
+            TabView {
+                GameCoordinatorView(
+                    mainCoordinator: GameCoordinator(
+                        gameService : GameService(
+                            modelContext: container.mainContext
+                        ),
+                        playerService: PlayerService(
+                            modelContext: container.mainContext
+                        )
                     )
                 )
-            )
+                .tabItem {
+                    Label("Games", systemImage: "list.dash")
+                }
+                PlayerCoordinatorView(
+                    mainCoordinator: PlayerCoordinator(
+                        gameService: GameService(
+                            modelContext: container.mainContext
+                        ),
+                        playerService: PlayerService(
+                            modelContext: container.mainContext
+                        )
+                    )
+                )
+                .tabItem {
+                    Label("Players", systemImage: "person.3")
+                }
+            }
         }
         
     }
@@ -33,6 +51,7 @@ struct ScoreCardApp: App {
             let schema = Schema([
                 Game.self,
                 Player.self,
+                OngoingGame.self,
             ])
             let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

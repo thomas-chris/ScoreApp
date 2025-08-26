@@ -7,10 +7,10 @@ extension HomeScreen {
         
         var games: [Game] = []
         var newGameName = ""
-        weak var coordinator: MainCoordinator?
+        weak var coordinator: GameCoordinator?
         let gameService: any Service<Game>
         
-        init(coordinator: MainCoordinator, gameService: any Service<Game>) {
+        init(coordinator: GameCoordinator, gameService: any Service<Game>) {
             self.coordinator = coordinator
             self.gameService = gameService
         }

@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct GameCoordinatorView: View {
-    @StateObject var mainCoordinator: GameCoordinator
+struct PlayerCoordinatorView: View {
+    @StateObject var mainCoordinator: PlayerCoordinator
     
     var body: some View {
         NavigationStack(path: $mainCoordinator.path) {
-            mainCoordinator.build(.home)
+            mainCoordinator.build(.players)
                 .navigationDestination(for: Screen.self) { screen in
                     mainCoordinator.build(screen)
                 }

@@ -6,10 +6,13 @@ extension PlayersScreen {
     class ViewModel {
         
         var players: [Player] = []
-        weak var coordinator: MainCoordinator?
+        weak var coordinator: PlayerCoordinator?
         let playerService: any Service<Player>
         
-        init(coordinator: MainCoordinator, playerService: any Service<Player>) {
+        init(
+            coordinator: PlayerCoordinator,
+            playerService: any Service<Player>
+        ) {
             self.coordinator = coordinator
             self.playerService = playerService
         }
