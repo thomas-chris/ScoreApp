@@ -21,6 +21,16 @@
 		3E9FECC42E47901F00C0920F /* ScoreCardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScoreCardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3E87BD742E5F3DF000DE9353 /* Exceptions for "ScoreCardTests" folder in "ScoreCardTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ScoreCard.xctestplan,
+			);
+			target = 3E9FECC32E47901F00C0920F /* ScoreCardTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3E9FECB72E47901C00C0920F /* ScoreCard */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -29,6 +39,9 @@
 		};
 		3E9FECC72E47901F00C0920F /* ScoreCardTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3E87BD742E5F3DF000DE9353 /* Exceptions for "ScoreCardTests" folder in "ScoreCardTests" target */,
+			);
 			path = ScoreCardTests;
 			sourceTree = "<group>";
 		};

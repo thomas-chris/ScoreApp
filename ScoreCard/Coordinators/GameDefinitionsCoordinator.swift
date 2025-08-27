@@ -62,7 +62,7 @@ extension GameDefinitionsCoordinator {
             case .home:
                 GameDefinitionScreen(viewModel: gamesViewModel)
             case .gameDetail(let game):
-                GameScreen(viewModel: GameScreen.ViewModel(game: game, coordinator: self))
+                GameScreen(viewModel: GameScreen.ViewModel(game: game, coordinator: self, playerService: playerService))
             default:
                 EmptyView()
         }

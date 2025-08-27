@@ -38,17 +38,12 @@ struct GameDefinitionsScreenViewModelTests {
     }
     
     @Test func testShowGameCallsCoordinator() {
-        class TestCoordinator: GameDefinitionsCoordinator {
-            var didShowGame = false
-            override func showGame(_ game: Game) {
-                didShowGame = true
-            }
-        }
+        
         let gameService = MockGameService()
-        let coordinator = TestCoordinator(gameService: gameService, playerService: MockPlayerService())
+        let coordinator = MockCoordinator()
         let viewModel = GameDefinitionScreen.ViewModel(coordinator: coordinator, gameService: gameService)
         let game = Game(name: "ShowMe", ruleSet: .default)
         viewModel.showGame(game)
-        #expect(coordinator.didShowGame)
+        #expect(coordinator.invocations.push.count == 1)
     }
 }

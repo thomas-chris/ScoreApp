@@ -7,10 +7,10 @@ extension GameDefinitionScreen {
         
         var games: [Game] = []
         var newGameName = ""
-        weak var coordinator: GameDefinitionsCoordinator?
+        weak var coordinator: (any AppCoordinator)?
         let gameService: any Service<Game>
         
-        init(coordinator: GameDefinitionsCoordinator, gameService: any Service<Game>) {
+        init(coordinator: any AppCoordinator, gameService: any Service<Game>) {
             self.coordinator = coordinator
             self.gameService = gameService
         }
@@ -32,7 +32,7 @@ extension GameDefinitionScreen {
         }
         
         func showGame(_ game: Game) {
-            coordinator?.showGame(game)
+            coordinator?.push(.gameDetail(game))
         }
         
         func refresh() {

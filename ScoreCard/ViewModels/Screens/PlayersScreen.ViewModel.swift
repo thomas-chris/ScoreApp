@@ -6,11 +6,11 @@ extension PlayersScreen {
     class ViewModel {
         
         var players: [Player] = []
-        weak var coordinator: PlayerCoordinator?
+        weak var coordinator: (any AppCoordinator)?
         let playerService: any Service<Player>
         
         init(
-            coordinator: PlayerCoordinator,
+            coordinator: any AppCoordinator,
             playerService: any Service<Player>
         ) {
             self.coordinator = coordinator
@@ -30,7 +30,7 @@ extension PlayersScreen {
         }
         
         func showPlayer(_ player: Player) {
-            coordinator?.showPlayer(player)
+            coordinator?.push(.playerDetail(player))
         }
         
         func refresh() {

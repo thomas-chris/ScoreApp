@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "BA5039E6-C3F3-4390-B374-6248E7A8029B",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ScoreCard.xcodeproj",
+      "identifier" : "3E9FECB42E47901C00C0920F",
+      "name" : "ScoreCard"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:ScoreCard.xcodeproj",
+        "identifier" : "3E9FECC32E47901F00C0920F",
+        "name" : "ScoreCardTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:ScoreCard.xcodeproj",
+        "identifier" : "3E9FECCD2E47901F00C0920F",
+        "name" : "ScoreCardUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

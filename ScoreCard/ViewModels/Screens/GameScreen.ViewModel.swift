@@ -6,15 +6,16 @@ extension GameScreen {
     class ViewModel {
         
         var game: Game
-        weak var coordinator: GameDefinitionsCoordinator?
+        weak var coordinator: (any AppCoordinator)?
         var players: [Player]
-        
+        var playerService: any Service<Player>
         var selectedPlayers: Set<Player> = []
         
-        init(game: Game, coordinator: GameDefinitionsCoordinator) {
+        init(game: Game, coordinator: any AppCoordinator, playerService: any Service<Player>) {
             self.game = game
             self.coordinator = coordinator
-            self.players = coordinator.playerService.fetchData()
+            self.playerService = playerService
+            self.players = playerService.fetchData()
         }
         
         func toggle(_ player: Player) {
@@ -40,7 +41,7 @@ extension GameScreen {
         }
         
         func refreshPlayers() {
-            players = coordinator?.playerService.fetchData() ?? []
+            players = playerService.fetchData()
         }
     }
 }

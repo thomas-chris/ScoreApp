@@ -5,7 +5,7 @@ extension OngoingGamesScreen {
     @Observable
     class ViewModel {
         var games: [OngoingGame] = []
-        weak var coordinator: OngoingGameCoordinator?
+        weak var coordinator: (any AppCoordinator)?
         let ongoingGameService: any Service<OngoingGame>
         
         var ongoingGames: [OngoingGame] {

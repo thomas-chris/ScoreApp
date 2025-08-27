@@ -46,7 +46,7 @@ struct GameScreen: View {
                             title: "Players",
                             sectionExpanded: $playersSectionExpanded
                         )
-                            
+                        
                     }
                 }
             }
@@ -76,8 +76,12 @@ import SwiftData
             maxNumberOfPlayers: 8
         )
     )
-    let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: GameDefinitionsCoordinator(
-        gameService : PreviewGameService(),
-        playerService: PreviewPlayerService()))
+    let viewModel = GameScreen.ViewModel(
+        game: mockGame,
+        coordinator: GameDefinitionsCoordinator(
+            gameService : PreviewGameService(),
+            playerService: PreviewPlayerService()),
+        playerService: PreviewPlayerService()
+    )
     GameScreen(viewModel: viewModel)
 }
