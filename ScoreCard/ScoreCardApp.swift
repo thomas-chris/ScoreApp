@@ -44,7 +44,7 @@ struct ScoreCardApp: App {
                 OngoingGameCoordinatorView(mainCoordinator: OngoingGameCoordinator()
                 )
                 .tabItem {
-                    Label("Ongoing Games", systemImage: "list.dash")
+                    Label("Ongoing Games", systemImage: "arcade.stick.console")
                 }
             }
         }

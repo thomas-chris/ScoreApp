@@ -3,6 +3,7 @@ import SwiftUI
 import Combine
 
 class OngoingGameCoordinator: AppCoordinator {
+    @Published var ongoingGamesViewModel: OngoingGamesScreen.ViewModel?
     var path: NavigationPath
     var sheet: Sheet?
     var parentCoordinator: (any AppCoordinator)?
@@ -44,7 +45,7 @@ extension OngoingGameCoordinator {
     func build(_ screen: Screen) -> some View {
         switch screen {
             case .ongoingGames:
-                Text("Ongoing Games")
+                OngoingGamesScreen(viewModel: ongoingGamesViewModel)
             default:
                 EmptyView()
         }

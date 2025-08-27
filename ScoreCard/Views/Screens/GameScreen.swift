@@ -42,13 +42,10 @@ struct GameScreen: View {
                     }
                 } header: {
                     HStack {
-                        Text("Players")
-                            .font(.headline)
-                        Spacer()
-                        Image(systemName: playersSectionExpanded ? "chevron.down" : "chevron.right")
-                            .onTapGesture {
-                                playersSectionExpanded.toggle()
-                            }
+                        CollapsableHeaderSection(
+                            title: "Players",
+                            sectionExpanded: $playersSectionExpanded
+                        )
                             
                     }
                 }
