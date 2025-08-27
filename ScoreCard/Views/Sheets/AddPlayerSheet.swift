@@ -54,25 +54,16 @@ struct AddPlayerSheet: View {
 
 #Preview {
     Group {
-        if let container = try? ModelContainer(
-            for: Game.self
-        ) {
-            let viewModel = AddPlayerSheet.ViewModel(
-                coordinator: PlayerCoordinator(
-                    gameService: PreviewGameService(),
-                    playerService: PreviewPlayerService()
-                ),
+        let viewModel = AddPlayerSheet.ViewModel(
+            coordinator: PlayerCoordinator(
+                gameService: PreviewGameService(),
                 playerService: PreviewPlayerService()
-            )
-            AddPlayerSheet(
-                viewModel: viewModel
-            )
-        } else {
-            AnyView(
-                Text(
-                    "Model container not available"
-                )
-            )
-        }
+            ),
+            playerService: PreviewPlayerService()
+        )
+        AddPlayerSheet(
+            viewModel: viewModel
+        )
+        
     }
 }
