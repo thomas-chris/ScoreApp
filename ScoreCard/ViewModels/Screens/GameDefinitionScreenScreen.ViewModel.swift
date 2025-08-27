@@ -19,10 +19,6 @@ extension GameDefinitionScreen {
             coordinator?.presentSheet(.createGame)
         }
         
-        func dismissAlert() {
-            
-        }
-        
         func delete(at offsets: IndexSet) {
             for offset in offsets {
                 let game = games[offset]

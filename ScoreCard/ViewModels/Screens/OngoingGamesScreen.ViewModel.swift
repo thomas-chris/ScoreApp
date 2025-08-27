@@ -17,7 +17,7 @@ extension OngoingGamesScreen {
         }
         
         init(
-            coordinator: OngoingGameCoordinator,
+            coordinator: any AppCoordinator,
             ongoingGameService: any Service<OngoingGame>
         ) {
             self.coordinator = coordinator

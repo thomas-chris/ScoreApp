@@ -6,8 +6,9 @@ import SwiftData
     @Attribute(.unique) var id: UUID
     var game: Game
     var players: [Player]
-    var scores: [String: Int] = [:] // Dictionary with Player ID as key and score as value
+    var scores: [String: Int] // Dictionary with Player ID as key and score as value
     var roundsPlayed: Int
+
     var name: String
     
     var isFinished: Bool {
@@ -20,11 +21,19 @@ import SwiftData
     }
     
     
-    init(name: String, game: Game, players: [Player], roundsPlayed: Int, id: UUID = UUID()) {
+    init(
+        name: String,
+        game: Game,
+        players: [Player],
+        scores: [String: Int],
+        roundsPlayed: Int,
+        id: UUID = UUID()
+    ) {
         self.name = name
         self.game = game
         self.players = players
         self.roundsPlayed = roundsPlayed
+        self.scores = scores
         self.id = id
     }
     
