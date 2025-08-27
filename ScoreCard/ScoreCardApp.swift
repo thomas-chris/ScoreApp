@@ -41,6 +41,11 @@ struct ScoreCardApp: App {
                 .tabItem {
                     Label("Players", systemImage: "person.3")
                 }
+                OngoingGameCoordinatorView(mainCoordinator: OngoingGameCoordinator()
+                )
+                .tabItem {
+                    Label("Ongoing Games", systemImage: "list.dash")
+                }
             }
         }
         
