@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 
-@Model class Player: Identifiable {
+@Model class Player: HasName {
     
     @Attribute(.unique) var id: UUID
     var name: String

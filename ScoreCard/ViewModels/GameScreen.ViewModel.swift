@@ -11,7 +11,7 @@ extension GameScreen {
             coordinator?.playerService.fetchData() ?? []
         }
         
-        var selectedPlayers: [Player] = []
+        var selectedPlayers: Set<Player> = []
         
         init(game: Game, coordinator: GameCoordinator) {
             self.game = game
@@ -20,9 +20,9 @@ extension GameScreen {
         
         func addToGame(_ player: Player) {
             if !selectedPlayers.contains(player) {
-                selectedPlayers.append(player)
+                selectedPlayers.insert(player)
             } else {
-                selectedPlayers.removeAll { $0 == player }
+                selectedPlayers.remove(player)
             }
         }
         
@@ -33,6 +33,11 @@ extension GameScreen {
         var canStartGame: Bool {
             selectedPlayers.count >= game.ruleSet.minNumberOfPlayers &&
             selectedPlayers.count <= game.ruleSet.maxNumberOfPlayers
+        }
+        
+        func startGame() {
+            // Logic to start the game with selected players
+            print("Starting game \(game.name) with players: \(selectedPlayers.map { $0.name }.joined(separator: ", "))")
         }
     }
 }

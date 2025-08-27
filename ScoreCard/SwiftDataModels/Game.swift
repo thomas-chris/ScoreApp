@@ -1,7 +1,12 @@
 import Foundation
 import SwiftData
 
-@Model class Game: Identifiable {
+protocol HasName: Identifiable, Hashable {
+    var name: String { get set }
+    var id: UUID { get set }
+}
+
+@Model class Game: HasName {
     
     @Attribute(.unique) var id: UUID
     var name: String

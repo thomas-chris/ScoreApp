@@ -2,7 +2,8 @@ import SwiftUI
 
 struct GameScreen: View {
     
-    let viewModel: ViewModel
+    @Bindable var viewModel: ViewModel
+    
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
     }
@@ -19,29 +20,28 @@ struct GameScreen: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Rules")
-                .font(.headline)
-            
-            Text(rulesDescription)
-            Text("Min Players: \(viewModel.game.ruleSet.minNumberOfPlayers)")
-            Text("Max Players: \(viewModel.game.ruleSet.maxNumberOfPlayers)")
-            Spacer().frame(height: 20)
-            ForEach(viewModel.players) { player in
-                HStack {
-                    Text(player.name)
-                    if viewModel.isInGame(player) {
-                        Image(systemName: "checkmark")
-                    }
-                }
-                    .onTapGesture {
-                        viewModel.addToGame(player)
+        VStack {
+            List {
+                Section(header: Text("Rules")
+                    .font(.headline)) {
+                        
+                        Text(rulesDescription)
+                        Text("Min Players: \(viewModel.game.ruleSet.minNumberOfPlayers)")
+                        Text("Max Players: \(viewModel.game.ruleSet.maxNumberOfPlayers)")
                     }
             }
-            
+            MultiSelectDropdownMenu(
+                viewModel:
+                        .init(
+                            options: viewModel.players,
+                            selectedOptions: $viewModel.selectedPlayers
+                        )
+            )
+            .padding()
             Button("Start Game") {
-//                viewModel.startGame()
+                viewModel.startGame()
             }
+            .buttonStyle(.borderedProminent)
             .disabled(!viewModel.canStartGame)
         }
         .navigationTitle(viewModel.game.name)
