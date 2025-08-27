@@ -3,6 +3,7 @@ import SwiftUI
 struct GameScreen: View {
     
     @Bindable var viewModel: ViewModel
+    @State private var playersSectionExpanded: Bool = true
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -29,9 +30,8 @@ struct GameScreen: View {
                     Text("Min Players: \(viewModel.game.ruleSet.minNumberOfPlayers)")
                     Text("Max Players: \(viewModel.game.ruleSet.maxNumberOfPlayers)")
                 }
-                Section(header: Text("Players")
-                    .font(.headline)
-                ) {
+                
+                Section(isExpanded: $playersSectionExpanded) {
                     ForEach(viewModel.players, id: \.id) { player in
                         RadioButton(
                             label: player.name,
@@ -39,6 +39,17 @@ struct GameScreen: View {
                                 viewModel.toggle(player)
                             }
                         )
+                    }
+                } header: {
+                    HStack {
+                        Text("Players")
+                            .font(.headline)
+                        Spacer()
+                        Image(systemName: playersSectionExpanded ? "chevron.down" : "chevron.right")
+                            .onTapGesture {
+                                playersSectionExpanded.toggle()
+                            }
+                            
                     }
                 }
             }
