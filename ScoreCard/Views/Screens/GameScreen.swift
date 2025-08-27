@@ -76,7 +76,7 @@ import SwiftData
             maxNumberOfPlayers: 8
         )
     )
-    let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: GameCoordinator(
+    let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: GameDefinitionsCoordinator(
         gameService : PreviewGameService(),
         playerService: PreviewPlayerService()))
     GameScreen(viewModel: viewModel)

@@ -2,6 +2,6 @@
 
 extension RuleSet {
     static var `default`: RuleSet {
-        RuleSet(gameType: .highScoreWins(0))
+        RuleSet(gameType: .highScoreWins(0), minNumberOfPlayers: 2, maxNumberOfPlayers: 8)
     }
 }

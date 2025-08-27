@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct GameCoordinatorView: View {
-    @StateObject var mainCoordinator: GameCoordinator
+struct GameDefinitionCoordinatorView: View {
+    @StateObject var mainCoordinator: GameDefinitionsCoordinator
     
     var body: some View {
         NavigationStack(path: $mainCoordinator.path) {

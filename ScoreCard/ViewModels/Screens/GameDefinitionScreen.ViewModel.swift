@@ -6,12 +6,12 @@ extension GameScreen {
     class ViewModel {
         
         var game: Game
-        weak var coordinator: GameCoordinator?
+        weak var coordinator: GameDefinitionsCoordinator?
         var players: [Player]
         
         var selectedPlayers: Set<Player> = []
         
-        init(game: Game, coordinator: GameCoordinator) {
+        init(game: Game, coordinator: GameDefinitionsCoordinator) {
             self.game = game
             self.coordinator = coordinator
             self.players = coordinator.playerService.fetchData()

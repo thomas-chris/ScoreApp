@@ -132,7 +132,7 @@ struct AddGameSheet: View {
     Group {
         
         let viewModel = AddGameSheet.ViewModel(
-            coordinator: GameCoordinator(
+            coordinator: GameDefinitionsCoordinator(
                 gameService: PreviewGameService(),
                 playerService: PreviewPlayerService()
             ),

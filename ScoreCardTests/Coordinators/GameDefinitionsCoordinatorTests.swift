@@ -3,19 +3,18 @@ import SwiftUI
 import SwiftData
 import Testing
 
-struct MainCoordinatorTests {
+struct GameDefinitionsCoordinatorTests {
     @Test func testInitialization() {
-        let container = try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
-        let coordinator = GameCoordinator(gameService: MockGameService())
+        
+        let coordinator = GameDefinitionsCoordinator(gameService: MockGameService(), playerService: MockPlayerService())
         #expect(coordinator.gamesViewModel != nil)
-        #expect(coordinator.games.count == 0)
         #expect(coordinator.path.count == 0)
         #expect(coordinator.sheet == nil)
     }
     
     @Test func testPushAndPopNavigation() {
-        let container = try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
-        let coordinator = GameCoordinator(gameService: MockGameService())
+        
+        let coordinator = GameDefinitionsCoordinator(gameService: MockGameService(), playerService: MockPlayerService())
         coordinator.push(.home)
         #expect(coordinator.path.count == 1)
         coordinator.pop()
@@ -23,8 +22,8 @@ struct MainCoordinatorTests {
     }
     
     @Test func testPopToRootNavigation() {
-        let container = try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
-        let coordinator = GameCoordinator(gameService: MockGameService())
+        
+        let coordinator = GameDefinitionsCoordinator(gameService: MockGameService(), playerService: MockPlayerService())
         coordinator.push(.home)
         coordinator.push(.gameDetail(Game(name: "Test", ruleSet: .default)))
         #expect(coordinator.path.count == 2)
@@ -33,8 +32,8 @@ struct MainCoordinatorTests {
     }
     
     @Test func testSheetPresentationAndDismissal() {
-        let container = try! ModelContainer(for: Game.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
-        let coordinator = GameCoordinator(gameService: MockGameService())
+        
+        let coordinator = GameDefinitionsCoordinator(gameService: MockGameService(), playerService: MockPlayerService())
         coordinator.presentSheet(.createGame)
         #expect(coordinator.sheet == .createGame)
         coordinator.dismissSheet()
@@ -42,7 +41,7 @@ struct MainCoordinatorTests {
     }
     
     @Test func testShowGamePushesDetail() {
-        let coordinator = GameCoordinator(gameService: MockGameService())
+        let coordinator = GameDefinitionsCoordinator(gameService: MockGameService(), playerService: MockPlayerService())
         let game = Game(name: "DetailTest", ruleSet: .default)
         coordinator.showGame(game)
         #expect(coordinator.path.count == 1)

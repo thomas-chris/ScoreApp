@@ -1,16 +1,16 @@
 import SwiftData
 import SwiftUI
 
-extension HomeScreen {
+extension GameDefinitionScreen {
     @Observable
     class ViewModel {
         
         var games: [Game] = []
         var newGameName = ""
-        weak var coordinator: GameCoordinator?
+        weak var coordinator: GameDefinitionsCoordinator?
         let gameService: any Service<Game>
         
-        init(coordinator: GameCoordinator, gameService: any Service<Game>) {
+        init(coordinator: GameDefinitionsCoordinator, gameService: any Service<Game>) {
             self.coordinator = coordinator
             self.gameService = gameService
         }

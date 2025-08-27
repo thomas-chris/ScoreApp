@@ -30,5 +30,6 @@ struct OngoingGamesScreen: View {
             }
                 
         }
+        .navigationTitle("Games")
     }
 }

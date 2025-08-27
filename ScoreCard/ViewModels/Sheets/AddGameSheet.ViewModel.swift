@@ -11,9 +11,9 @@ extension AddGameSheet {
         var value: Int = 0
         var gameService: any Service<Game>
         // Using a weak reference to avoid strong reference cycles
-        weak var coordinator: GameCoordinator?
+        weak var coordinator: GameDefinitionsCoordinator?
         
-        init(coordinator: GameCoordinator, gameService: any Service<Game>) {
+        init(coordinator: GameDefinitionsCoordinator, gameService: any Service<Game>) {
             self.coordinator = coordinator
             self.gameService = gameService
         }

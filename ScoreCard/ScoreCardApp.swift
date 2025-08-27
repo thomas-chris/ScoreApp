@@ -15,8 +15,8 @@ struct ScoreCardApp: App {
     var body: some Scene {
         WindowGroup {
             TabView {
-                GameCoordinatorView(
-                    mainCoordinator: GameCoordinator(
+                GameDefinitionCoordinatorView(
+                    mainCoordinator: GameDefinitionsCoordinator(
                         gameService : GameService(
                             modelContext: container.mainContext
                         ),

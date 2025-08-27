@@ -2,8 +2,8 @@ import SwiftData
 import SwiftUI
 import Combine
 
-class GameCoordinator: AppCoordinator {
-    @Published var gamesViewModel: HomeScreen.ViewModel?
+class GameDefinitionsCoordinator: AppCoordinator {
+    @Published var gamesViewModel: GameDefinitionScreen.ViewModel?
     @Published var path: NavigationPath
     @Published var sheet: Sheet?
     @Published var selectedTab: Int = 0
@@ -16,7 +16,7 @@ class GameCoordinator: AppCoordinator {
         self.gameService = gameService
         self.playerService = playerService
         self.path = NavigationPath()
-        self.gamesViewModel = HomeScreen.ViewModel(coordinator: self, gameService: gameService)
+        self.gamesViewModel = GameDefinitionScreen.ViewModel(coordinator: self, gameService: gameService)
     }
     
     func push(_ screen: Screen) {
@@ -54,13 +54,13 @@ class GameCoordinator: AppCoordinator {
 
 }
 
-extension GameCoordinator {
+extension GameDefinitionsCoordinator {
     // MARK: - Presentation Style Providers
     @ViewBuilder
     func build(_ screen: Screen) -> some View {
         switch screen {
             case .home:
-                HomeScreen(viewModel: gamesViewModel)
+                GameDefinitionScreen(viewModel: gamesViewModel)
             case .gameDetail(let game):
                 GameScreen(viewModel: GameScreen.ViewModel(game: game, coordinator: self))
             default:

@@ -2,7 +2,7 @@ import Observation
 import SwiftUI
 import SwiftData
 
-struct HomeScreen: View {
+struct GameDefinitionScreen: View {
     let viewModel: ViewModel?
     
     init(viewModel: ViewModel?) {
@@ -24,7 +24,7 @@ struct HomeScreen: View {
         .refreshable {
             viewModel?.refresh()
         }
-        .navigationTitle("Games")
+        .navigationTitle("Defined Games")
         .toolbar {
             Button(action: {
                 viewModel?.createGame()
