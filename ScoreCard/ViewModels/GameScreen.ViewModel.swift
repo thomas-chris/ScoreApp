@@ -7,18 +7,17 @@ extension GameScreen {
         
         var game: Game
         weak var coordinator: GameCoordinator?
-        var players: [Player] {
-            coordinator?.playerService.fetchData() ?? []
-        }
+        var players: [Player]
         
         var selectedPlayers: Set<Player> = []
         
         init(game: Game, coordinator: GameCoordinator) {
             self.game = game
             self.coordinator = coordinator
+            self.players = coordinator.playerService.fetchData()
         }
         
-        func addToGame(_ player: Player) {
+        func toggle(_ player: Player) {
             if !selectedPlayers.contains(player) {
                 selectedPlayers.insert(player)
             } else {
@@ -38,6 +37,10 @@ extension GameScreen {
         func startGame() {
             // Logic to start the game with selected players
             print("Starting game \(game.name) with players: \(selectedPlayers.map { $0.name }.joined(separator: ", "))")
+        }
+        
+        func refreshPlayers() {
+            players = coordinator?.playerService.fetchData() ?? []
         }
     }
 }

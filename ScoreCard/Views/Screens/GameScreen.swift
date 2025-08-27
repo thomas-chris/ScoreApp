@@ -23,26 +23,33 @@ struct GameScreen: View {
         VStack {
             List {
                 Section(header: Text("Rules")
-                    .font(.headline)) {
-                        
-                        Text(rulesDescription)
-                        Text("Min Players: \(viewModel.game.ruleSet.minNumberOfPlayers)")
-                        Text("Max Players: \(viewModel.game.ruleSet.maxNumberOfPlayers)")
-                    }
-            }
-            MultiSelectDropdownMenu(
-                viewModel:
-                        .init(
-                            options: viewModel.players,
-                            selectedOptions: $viewModel.selectedPlayers
+                    .font(.headline)
+                ) {
+                    Text(rulesDescription)
+                    Text("Min Players: \(viewModel.game.ruleSet.minNumberOfPlayers)")
+                    Text("Max Players: \(viewModel.game.ruleSet.maxNumberOfPlayers)")
+                }
+                Section(header: Text("Players")
+                    .font(.headline)
+                ) {
+                    ForEach(viewModel.players, id: \.id) { player in
+                        RadioButton(
+                            label: player.name,
+                            toggleAction: {
+                                viewModel.toggle(player)
+                            }
                         )
-            )
-            .padding()
+                    }
+                }
+            }
             Button("Start Game") {
                 viewModel.startGame()
             }
             .buttonStyle(.borderedProminent)
             .disabled(!viewModel.canStartGame)
+        }
+        .onAppear {
+            viewModel.refreshPlayers()
         }
         .navigationTitle(viewModel.game.name)
         .navigationBarTitleDisplayMode(.inline)
@@ -62,6 +69,7 @@ import SwiftData
         )
     )
     let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: GameCoordinator(
-        gameService : PreviewGameService(), playerService: PreviewPlayerService()))
+        gameService : PreviewGameService(),
+        playerService: PreviewPlayerService()))
     GameScreen(viewModel: viewModel)
 }

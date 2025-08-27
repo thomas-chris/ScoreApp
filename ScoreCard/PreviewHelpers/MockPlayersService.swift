@@ -24,7 +24,11 @@ class PreviewPlayerService: Service {
     }
     
     struct Returns {
-        var fetchData: [Player] = []
+        var fetchData: [Player] = [
+            Player(name: "Alice"),
+            Player(name: "Bob"),
+            Player(name: "Charlie")
+        ]
     }
     
     var invocations = Invocations()
