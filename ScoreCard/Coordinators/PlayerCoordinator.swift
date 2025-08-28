@@ -2,40 +2,21 @@ import SwiftData
 import SwiftUI
 import Combine
 
-class PlayerCoordinator: AppCoordinator {
+class PlayerCoordinator: MainCoordinator {
     @Published var playerViewModel: PlayersScreen.ViewModel?
-    @Published var path: NavigationPath
-    @Published var sheet: Sheet?
     @Published var selectedTab: Int = 0
     
     let gameService: any Service<Game>
     let playerService: any Service<Player>
-    let parentCoordinator: (any AppCoordinator)? = nil
     
     init(gameService: any Service<Game>, playerService: any Service<Player>) {
         self.gameService = gameService
         self.playerService = playerService
-        self.path = NavigationPath()
+        super.init()
         self.playerViewModel = PlayersScreen.ViewModel(coordinator: self, playerService: playerService)
     }
     
-    func push(_ screen: Screen) {
-        path.append(screen)
-    }
-    
-    func presentSheet(_ sheet: Sheet) {
-        self.sheet = sheet
-    }
-    
-    func pop() {
-        path.removeLast()
-    }
-    
-    func popToRoot() {
-        path.removeLast(path.count)
-    }
-    
-    func dismissSheet() {
+    override func dismissSheet() {
         self.sheet = nil
 
         playerViewModel?.refresh()
@@ -49,7 +30,7 @@ class PlayerCoordinator: AppCoordinator {
         print("Show player detail not implemented yet")
     }
     
-    func switchTab(_ index: Int) {
+    override func switchTab(_ index: Int) {
         selectedTab = index
     }
     

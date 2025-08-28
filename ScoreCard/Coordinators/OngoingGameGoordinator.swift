@@ -2,39 +2,11 @@ import SwiftData
 import SwiftUI
 import Combine
 
-class OngoingGameCoordinator: AppCoordinator {
+class OngoingGameCoordinator: MainCoordinator {
     @Published var ongoingGamesViewModel: OngoingGamesScreen.ViewModel?
-    var path: NavigationPath
-    var sheet: Sheet?
-    var parentCoordinator: (any AppCoordinator)?
 
-    init(parentCoordinator: (any AppCoordinator)? = nil) {
-        self.path = NavigationPath()
-        self.parentCoordinator = parentCoordinator
-    }
-    
-    func push(_ screen: Screen) {
-        
-    }
-
-    func presentSheet(_ sheet: Sheet) {
-        
-    }
-
-    func pop() {
-        
-    }
-
-    func popToRoot() {
-        
-    }
-
-    func dismissSheet() {
-        
-    }
-
-    func switchTab(_ index: Int) {
-        
+    override init(parentCoordinator: (any AppCoordinator)? = nil) {
+        super.init(parentCoordinator: parentCoordinator)
     }
 
 }

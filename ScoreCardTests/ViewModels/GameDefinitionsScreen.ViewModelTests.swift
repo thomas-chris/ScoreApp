@@ -15,6 +15,7 @@ struct GameDefinitionsScreenViewModelTests {
     @Test func testCreateGameCallsCoordinator() {
         class TestCoordinator: GameDefinitionsCoordinator {
             var didPresentSheet = false
+            
             override func presentSheet(_ sheet: Sheet) {
                 didPresentSheet = true
             }
