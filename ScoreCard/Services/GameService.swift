@@ -1,15 +1,6 @@
 import Foundation
 import SwiftData
 
-protocol Service<T> {
-    
-    associatedtype T
-    
-    func insert(_ item: T)
-    func delete(_ item: T)
-    func fetchData() -> [T]
-}
-
 class GameService: Service {
     
     private var modelContext: ModelContext
