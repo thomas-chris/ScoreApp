@@ -43,6 +43,8 @@ extension PlayerCoordinator {
         switch screen {
             case .players:
                 PlayersScreen(viewModel: playerViewModel)
+            case .playerDetail(let player):
+                Text("Player Detail for \(player.name) needs to be implemented")
             default:
                 EmptyView()
         }

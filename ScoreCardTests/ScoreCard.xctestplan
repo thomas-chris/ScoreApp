@@ -9,6 +9,15 @@
     }
   ],
   "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:ScoreCard.xcodeproj",
+          "identifier" : "3E9FECB42E47901C00C0920F",
+          "name" : "ScoreCard"
+        }
+      ]
+    },
     "targetForVariableExpansion" : {
       "containerPath" : "container:ScoreCard.xcodeproj",
       "identifier" : "3E9FECB42E47901C00C0920F",

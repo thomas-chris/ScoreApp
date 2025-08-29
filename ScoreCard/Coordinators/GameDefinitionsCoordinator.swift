@@ -25,10 +25,6 @@ class GameDefinitionsCoordinator: MainCoordinator {
         push(.gameDetail(game))
     }
     
-    func showPlayer(_ player: Player) {
-        print("Show player detail not implemented yet")
-    }
-    
     override func switchTab(_ index: Int) {
         selectedTab = index
     }
