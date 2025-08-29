@@ -24,6 +24,10 @@ extension OngoingGamesScreen {
             self.ongoingGameService = ongoingGameService
         }
         
+        func show(_ game: OngoingGame) {
+            coordinator?.push(.ongoingGameDetail(game))
+        }
+        
         func refresh() {
             games = ongoingGameService.fetchData()
         }

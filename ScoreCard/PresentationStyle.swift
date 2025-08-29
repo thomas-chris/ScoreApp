@@ -7,6 +7,7 @@ enum Screen: Identifiable, Hashable {
     case players
     case playerDetail(Player)
     case ongoingGames
+    case ongoingGameDetail(OngoingGame)
     
     var id: Self { return self }
 }

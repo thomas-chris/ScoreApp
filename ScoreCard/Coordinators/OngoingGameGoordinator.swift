@@ -27,6 +27,12 @@ extension OngoingGameCoordinator {
         switch screen {
             case .ongoingGames:
                 OngoingGamesScreen(viewModel: ongoingGamesViewModel)
+            case .ongoingGameDetail(let game):
+                OngoingGameDetailScreen(
+                    viewModel: OngoingGameDetailScreen.ViewModel(
+                        ongoingGame: game
+                    )
+                )
             default:
                 EmptyView()
         }

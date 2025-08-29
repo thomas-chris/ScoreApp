@@ -15,6 +15,9 @@ struct OngoingGamesScreen: View {
             ) {
                 ForEach(viewModel?.ongoingGames ?? [], id: \.id) { game in
                     Text(game.name)
+                        .onTapGesture {
+                            viewModel?.show(game)
+                        }
                 }
                 .onDelete { offsets in
                     viewModel?.deleteOngoing(at: offsets)
