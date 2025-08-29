@@ -5,7 +5,11 @@ import Testing
 
 struct GameDefinitionsScreenViewModelTests {
     @Test func testInitialization() {
-        let coordinator = GameDefinitionsCoordinator(gameService: MockGameService(), playerService: MockPlayerService())
+        let coordinator = GameDefinitionsCoordinator(
+            gameService: MockGameService(),
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         let viewModel = GameDefinitionScreen.ViewModel(coordinator: coordinator, gameService: MockGameService())
         #expect(viewModel.games.isEmpty)
         #expect(viewModel.newGameName == "")
@@ -21,7 +25,11 @@ struct GameDefinitionsScreenViewModelTests {
             }
         }
         let gameService = MockGameService()
-        let coordinator = TestCoordinator(gameService: gameService, playerService: MockPlayerService())
+        let coordinator = TestCoordinator(
+            gameService: gameService,
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         let viewModel = GameDefinitionScreen.ViewModel(coordinator: coordinator, gameService: gameService)
         viewModel.createGame()
         #expect(coordinator.didPresentSheet)
@@ -30,7 +38,11 @@ struct GameDefinitionsScreenViewModelTests {
     @Test func testDeleteCallsCoordinatorAndRefresh() {
         let gameService = MockGameService()
         gameService.returns.fetchData = [Game(name: "TestGame", ruleSet: .default)]
-        let coordinator = GameDefinitionsCoordinator(gameService: gameService, playerService: MockPlayerService())
+        let coordinator = GameDefinitionsCoordinator(
+            gameService: gameService,
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         let viewModel = GameDefinitionScreen.ViewModel(coordinator: coordinator, gameService: gameService)
         viewModel.refresh() // Load initial data
         viewModel.delete(at: IndexSet(integer: 0))

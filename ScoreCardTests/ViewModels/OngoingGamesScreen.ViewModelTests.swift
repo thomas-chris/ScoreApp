@@ -56,8 +56,8 @@ struct OngoingGamesScreen_ViewModelTests {
             ),
             players: [player1, player2],
             scores: [
-                player1.id.uuidString: 10,
-                player2.id.uuidString: 5
+                player1.id: 10,
+                player2.id: 5
             ],
             roundsPlayed: 15
         )
@@ -92,8 +92,8 @@ struct OngoingGamesScreen_ViewModelTests {
             ),
             players: [player1, player2],
             scores: [
-                player1.id.uuidString: 4,
-                player2.id.uuidString: 2
+                player1.id: 4,
+                player2.id: 2
             ],
             roundsPlayed: 0
         )
@@ -111,8 +111,8 @@ struct OngoingGamesScreen_ViewModelTests {
             ),
             players: [player1, player2],
             scores: [
-                player1.id.uuidString: 11,
-                player2.id.uuidString: 7
+                player1.id: 11,
+                player2.id: 7
             ],
             roundsPlayed: 15
         )
@@ -153,8 +153,8 @@ struct OngoingGamesScreen_ViewModelTests {
             game: Game(name: "FinishedGame1", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4)),
             players: [player1, player2],
             scores: [
-                player1.id.uuidString: 12,
-                player2.id.uuidString: 8
+                player1.id: 12,
+                player2.id: 8
             ],
             roundsPlayed: 15
         )
@@ -163,8 +163,8 @@ struct OngoingGamesScreen_ViewModelTests {
             game: Game(name: "FinishedGame2", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4)),
             players: [],
             scores: [
-                player1.id.uuidString:10,
-                player2.id.uuidString:5
+                player1.id:10,
+                player2.id:5
                 ],
             roundsPlayed: 15
         )

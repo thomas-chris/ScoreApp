@@ -6,14 +6,24 @@ import Testing
 struct GameScreen_ViewModelTests {
     @Test func testInit() {
         let mockGame = Game(name: "Test", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4))
-        let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: MockCoordinator(), playerService: MockPlayerService())
+        let viewModel = GameScreen.ViewModel(
+            game: mockGame,
+            coordinator: MockCoordinator(),
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         #expect(viewModel.game.name == "Test")
     }
     
     @Test func testTogglePlayerAddsIfNotSelected() {
         let mockGame = Game(name: "Test", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4))
         let mockPlayer = Player(name: "Alice", id: UUID())
-        let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: MockCoordinator(), playerService: MockPlayerService())
+        let viewModel = GameScreen.ViewModel(
+            game: mockGame,
+            coordinator: MockCoordinator(),
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         #expect(!viewModel.selectedPlayers.contains(mockPlayer))
         viewModel.toggle(mockPlayer)
         #expect(viewModel.selectedPlayers.contains(mockPlayer))
@@ -22,7 +32,12 @@ struct GameScreen_ViewModelTests {
     @Test func testTogglePlayerRemovesIfSelected() {
         let mockGame = Game(name: "Test", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4))
         let mockPlayer = Player(name: "Bob", id: UUID())
-        let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: MockCoordinator(), playerService: MockPlayerService())
+        let viewModel = GameScreen.ViewModel(
+            game: mockGame,
+            coordinator: MockCoordinator(),
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         viewModel.selectedPlayers.insert(mockPlayer)
         #expect(viewModel.selectedPlayers.contains(mockPlayer))
         viewModel.toggle(mockPlayer)
@@ -32,7 +47,12 @@ struct GameScreen_ViewModelTests {
     @Test func testIsInGameReturnsTrueForSelectedPlayer() {
         let mockGame = Game(name: "Test", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4))
         let mockPlayer = Player(name: "Alice", id: UUID())
-        let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: MockCoordinator(), playerService: MockPlayerService())
+        let viewModel = GameScreen.ViewModel(
+            game: mockGame,
+            coordinator: MockCoordinator(),
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         
         viewModel.selectedPlayers.insert(mockPlayer)
         
@@ -42,7 +62,12 @@ struct GameScreen_ViewModelTests {
     @Test func testIsInGameReturnsFalseForUnselectedPlayer() {
         let mockGame = Game(name: "Test", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4))
         let mockPlayer = Player(name: "Alice", id: UUID())
-        let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: MockCoordinator(), playerService: MockPlayerService())
+        let viewModel = GameScreen.ViewModel(
+            game: mockGame,
+            coordinator: MockCoordinator(),
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         
         #expect(viewModel.isInGame(mockPlayer) == false)
     }
@@ -51,7 +76,12 @@ struct GameScreen_ViewModelTests {
         let mockGame = Game(name: "Test", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4))
         let player1 = Player(name: "Alice", id: UUID())
         let player2 = Player(name: "Bob", id: UUID())
-        let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: MockCoordinator(), playerService: MockPlayerService())
+        let viewModel = GameScreen.ViewModel(
+            game: mockGame,
+            coordinator: MockCoordinator(),
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         
         viewModel.selectedPlayers.insert(player1)
         viewModel.selectedPlayers.insert(player2)
@@ -62,7 +92,12 @@ struct GameScreen_ViewModelTests {
     @Test func testCanStartGameReturnsFalseWithTooFewPlayers() {
         let mockGame = Game(name: "Test", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4))
         let player1 = Player(name: "Alice", id: UUID())
-        let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: MockCoordinator(), playerService: MockPlayerService())
+        let viewModel = GameScreen.ViewModel(
+            game: mockGame,
+            coordinator: MockCoordinator(),
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         
         viewModel.selectedPlayers.insert(player1)
         
@@ -76,7 +111,12 @@ struct GameScreen_ViewModelTests {
         let player3 = Player(name: "Charlie", id: UUID())
         let player4 = Player(name: "David", id: UUID())
         let player5 = Player(name: "Eve", id: UUID())
-        let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: MockCoordinator(), playerService: MockPlayerService())
+        let viewModel = GameScreen.ViewModel(
+            game: mockGame,
+            coordinator: MockCoordinator(),
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         
         viewModel.selectedPlayers.insert(player1)
         viewModel.selectedPlayers.insert(player2)
@@ -91,7 +131,12 @@ struct GameScreen_ViewModelTests {
         let mockGame = Game(name: "Test Game", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4))
         let player1 = Player(name: "Alice", id: UUID())
         let player2 = Player(name: "Bob", id: UUID())
-        let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: MockCoordinator(), playerService: MockPlayerService())
+        let viewModel = GameScreen.ViewModel(
+            game: mockGame,
+            coordinator: MockCoordinator(),
+            playerService: MockPlayerService(),
+            ongoingGameService: MockOngoingGameService()
+        )
         
         viewModel.selectedPlayers.insert(player1)
         viewModel.selectedPlayers.insert(player2)
@@ -114,7 +159,12 @@ struct GameScreen_ViewModelTests {
         ]
         mockPlayerService.returns.fetchData = initialPlayers
         
-        let viewModel = GameScreen.ViewModel(game: mockGame, coordinator: MockCoordinator(), playerService: mockPlayerService)
+        let viewModel = GameScreen.ViewModel(
+            game: mockGame,
+            coordinator: MockCoordinator(),
+            playerService: mockPlayerService,
+            ongoingGameService: MockOngoingGameService()
+        )
         
         let newPlayers = [
             Player(name: "New1", id: UUID()),
