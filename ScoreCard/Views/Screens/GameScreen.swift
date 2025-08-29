@@ -80,8 +80,8 @@ import SwiftData
         game: mockGame,
         coordinator: GameDefinitionsCoordinator(
             gameService : PreviewGameService(),
-            playerService: PreviewPlayerService()),
-        playerService: PreviewPlayerService()
+            playerService: PreviewPlayerService(), ongoingGameService: PreviewOngoingGameService()),
+        playerService: PreviewPlayerService(), ongoingGameService: PreviewOngoingGameService()
     )
     GameScreen(viewModel: viewModel)
 }

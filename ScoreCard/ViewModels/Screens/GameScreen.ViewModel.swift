@@ -9,12 +9,14 @@ extension GameScreen {
         weak var coordinator: (any AppCoordinator)?
         var players: [Player]
         var playerService: any Service<Player>
+        var ongoingGameService: any Service<OngoingGame>
         var selectedPlayers: Set<Player> = []
         
-        init(game: Game, coordinator: any AppCoordinator, playerService: any Service<Player>) {
+        init(game: Game, coordinator: any AppCoordinator, playerService: any Service<Player>, ongoingGameService: any Service<OngoingGame>) {
             self.game = game
             self.coordinator = coordinator
             self.playerService = playerService
+            self.ongoingGameService = ongoingGameService
             self.players = playerService.fetchData()
         }
         
@@ -37,12 +39,26 @@ extension GameScreen {
         
         func startGame() {
             // Logic to start the game with selected players
-            print("Starting game \(game.name) with players: \(selectedPlayers.map { $0.name }.joined(separator: ", "))")
+            
+            let scores = selectedPlayers.reduce(into: [UUID: Int]()) { dict, player in
+                dict[player.id] = 0
+            }
+            ongoingGameService.insert(
+                OngoingGame(
+                    name: "\(game.name): \(selectedPlayers.map { $0.name }.joined(separator: ", "))",
+                    game: game,
+                    players: Array(selectedPlayers),
+                    scores: scores,
+                    roundsPlayed: 0
+                )
+            )
+            
+            coordinator?.pop()
         }
         
         func refreshPlayers() {
             players = playerService.fetchData()
-        }
+        }            
     }
 }
 

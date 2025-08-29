@@ -27,5 +27,23 @@ extension OngoingGamesScreen {
         func refresh() {
             games = ongoingGameService.fetchData()
         }
+        
+        func deleteOngoing(at offsets: IndexSet) {
+            for offset in offsets {
+                let game = ongoingGames[offset]
+                ongoingGameService.delete(game)
+            }
+            
+            games = ongoingGameService.fetchData()
+        }
+        
+        func deleteCompleted(at offsets: IndexSet) {
+            for offset in offsets {
+                let game = completedGames[offset]
+                ongoingGameService.delete(game)
+            }
+            
+            games = ongoingGameService.fetchData()
+        }
     }
 }

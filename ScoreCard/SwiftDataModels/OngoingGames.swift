@@ -6,7 +6,7 @@ import SwiftData
     @Attribute(.unique) var id: UUID
     var game: Game
     var players: [Player]
-    var scores: [String: Int] // Dictionary with Player ID as key and score as value
+    var scores: [UUID: Int] // Dictionary with Player ID as key and score as value
     var roundsPlayed: Int
 
     var name: String
@@ -25,7 +25,7 @@ import SwiftData
         name: String,
         game: Game,
         players: [Player],
-        scores: [String: Int],
+        scores: [UUID: Int],
         roundsPlayed: Int,
         id: UUID = UUID()
     ) {

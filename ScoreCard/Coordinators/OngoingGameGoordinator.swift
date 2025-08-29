@@ -4,9 +4,18 @@ import Combine
 
 class OngoingGameCoordinator: MainCoordinator {
     @Published var ongoingGamesViewModel: OngoingGamesScreen.ViewModel?
-
-    override init(parentCoordinator: (any AppCoordinator)? = nil) {
+    let ongoingGameService: any Service<OngoingGame>
+    
+    init(
+        parentCoordinator: (any AppCoordinator)? = nil,
+        ongoingGameService: any Service<OngoingGame>
+    ) {
+        self.ongoingGameService = ongoingGameService
         super.init(parentCoordinator: parentCoordinator)
+        self.ongoingGamesViewModel = OngoingGamesScreen.ViewModel(
+            coordinator: self,
+            ongoingGameService: ongoingGameService
+        )
     }
 
 }

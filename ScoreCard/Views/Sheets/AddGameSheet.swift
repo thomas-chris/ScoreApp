@@ -134,7 +134,7 @@ struct AddGameSheet: View {
         let viewModel = AddGameSheet.ViewModel(
             coordinator: GameDefinitionsCoordinator(
                 gameService: PreviewGameService(),
-                playerService: PreviewPlayerService()
+                playerService: PreviewPlayerService(), ongoingGameService: PreviewOngoingGameService()
             ),
             gameService: PreviewGameService()
         )

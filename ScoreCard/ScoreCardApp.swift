@@ -22,6 +22,9 @@ struct ScoreCardApp: App {
                         ),
                         playerService: PlayerService(
                             modelContext: container.mainContext
+                        ),
+                        ongoingGameService: OngoingGameService(
+                            modelContext: container.mainContext
                         )
                     )
                 )
@@ -42,7 +45,11 @@ struct ScoreCardApp: App {
                     Label("Players", systemImage: "person.3")
                 }
                 OngoingGameCoordinatorView(
-                    mainCoordinator: OngoingGameCoordinator()
+                    mainCoordinator: OngoingGameCoordinator(
+                        ongoingGameService: OngoingGameService(
+                            modelContext: container.mainContext
+                        )
+                    )
                 )
                 .tabItem {
                     Label("Ongoing Games", systemImage: "arcade.stick.console")

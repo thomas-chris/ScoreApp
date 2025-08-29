@@ -1,3 +1,4 @@
+#if DEBUG
 class PreviewGameService: Service {
     func insert(_ item: ScoreCard.Game) {
         invocations.insert.append(item)
@@ -29,3 +30,4 @@ class PreviewGameService: Service {
     var invocations = Invocations()
     var returns = Returns()
 }
+#endif

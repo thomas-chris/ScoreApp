@@ -8,10 +8,12 @@ class GameDefinitionsCoordinator: MainCoordinator {
     
     let gameService: any Service<Game>
     let playerService: any Service<Player>
+    let ongoingGameService: any Service<OngoingGame>
     
-    init(gameService: any Service<Game>, playerService: any Service<Player>) {
+    init(gameService: any Service<Game>, playerService: any Service<Player>, ongoingGameService: any Service<OngoingGame>) {
         self.gameService = gameService
         self.playerService = playerService
+        self.ongoingGameService = ongoingGameService
         super.init()
         self.gamesViewModel = GameDefinitionScreen.ViewModel(coordinator: self, gameService: gameService)
     }
@@ -39,7 +41,14 @@ extension GameDefinitionsCoordinator {
             case .home:
                 GameDefinitionScreen(viewModel: gamesViewModel)
             case .gameDetail(let game):
-                GameScreen(viewModel: GameScreen.ViewModel(game: game, coordinator: self, playerService: playerService))
+                GameScreen(
+                    viewModel: GameScreen.ViewModel(
+                        game: game,
+                        coordinator: self,
+                        playerService: playerService,
+                        ongoingGameService: ongoingGameService
+                    )
+                )
             default:
                 EmptyView()
         }

@@ -16,11 +16,17 @@ struct OngoingGamesScreen: View {
                 ForEach(viewModel?.ongoingGames ?? [], id: \.id) { game in
                     Text(game.name)
                 }
+                .onDelete { offsets in
+                    viewModel?.deleteOngoing(at: offsets)
+                }
             }
             Section(isExpanded: $completedGamesSectionExpanded
             ) {
                 ForEach(viewModel?.completedGames ?? [], id: \.id) { game in
                     Text(game.name)
+                }
+                .onDelete { offsets in
+                    viewModel?.deleteCompleted(at: offsets)
                 }
             } header: {
                 CollapsableHeaderSection(
@@ -29,6 +35,12 @@ struct OngoingGamesScreen: View {
                 )
             }
                 
+        }
+        .onAppear {
+            viewModel?.refresh()
+        }
+        .refreshable {
+            viewModel?.refresh()
         }
         .navigationTitle("Games")
     }

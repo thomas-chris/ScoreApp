@@ -1,3 +1,4 @@
+#if DEBUG
 class PreviewPlayerService: Service {
 
     typealias T = Player
@@ -34,3 +35,4 @@ class PreviewPlayerService: Service {
     var invocations = Invocations()
     var returns = Returns()
 }
+#endif
