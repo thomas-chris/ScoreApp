@@ -23,10 +23,6 @@ struct OngoingGameDetailScreen: View {
                     roundsView(rounds: rounds)
             }
         }
-        .onAppear {
-            print(viewModel.ongoingGame.players)
-            print(viewModel.ongoingGame.game)
-        }
         .navigationTitle(viewModel.ongoingGame.name)
         .navigationBarTitleDisplayMode(.inline)
     }

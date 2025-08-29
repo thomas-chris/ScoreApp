@@ -12,6 +12,7 @@ extension OngoingGameDetailScreen {
             }
         }
         @Published var hasUnsavedChanges = false
+        @Published var gameOver = false
         
         init(ongoingGame: OngoingGame) {
             self.ongoingGame = ongoingGame
@@ -20,24 +21,24 @@ extension OngoingGameDetailScreen {
             }
         }
         
-        func incrementRoundsWon(for player: Player) {
-            hasUnsavedChanges = true
-            let newScore = ((Int(roundsWon[player.id] ?? "0") ?? 0) + 1).description
-            print(newScore)
-            roundsWon[player.id] = newScore
-            print(roundsWon)
-        }
-        
-        func decrementRoundsWon(for player: Player) {
-            hasUnsavedChanges = true
-            let newScore = ((Int(roundsWon[player.id] ?? "0") ?? 0) - 1).description
-            roundsWon[player.id] = newScore
-            print(roundsWon)
-        }
-        
-        func roundsWon(for player: Player) -> String {
-            print(roundsWon)
-            return roundsWon[player.id] ?? "0"
-        }
+    }
+}
+
+// Mark: Rounds functions
+extension OngoingGameDetailScreen.ViewModel {
+    func incrementRoundsWon(for player: Player) {
+        hasUnsavedChanges = true
+        let newScore = ((Int(roundsWon[player.id] ?? "0") ?? 0) + 1).description
+        roundsWon[player.id] = newScore
+    }
+    
+    func decrementRoundsWon(for player: Player) {
+        hasUnsavedChanges = true
+        let newScore = ((Int(roundsWon[player.id] ?? "0") ?? 0) - 1).description
+        roundsWon[player.id] = newScore
+    }
+    
+    func roundsWon(for player: Player) -> String {
+        return roundsWon[player.id] ?? "0"
     }
 }
