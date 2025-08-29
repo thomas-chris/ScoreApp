@@ -2,7 +2,7 @@ import SwiftUI
 
 struct OngoingGameDetailScreen: View {
     
-    let viewModel: ViewModel
+    @ObservedObject var viewModel: ViewModel
     
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -10,6 +10,10 @@ struct OngoingGameDetailScreen: View {
     
     var body: some View {
         ScrollView {
+            if viewModel.hasUnsavedChanges {
+                Text("Warning - unsaved changes")
+                    .foregroundColor(.red)
+            }
             switch viewModel.ongoingGame.game.ruleSet.gameType {
                 case .highScoreWins:
                     highScoreWinsView
@@ -74,16 +78,15 @@ extension OngoingGameDetailScreen {
                 self.viewModel.decrementRoundsWon(for: player)
             }) {
                 Image(systemName: "minus.circle")
-                    .foregroundColor(.red)
+                    .foregroundColor(.blue)
             }
             //will be rounds won for player
-            Text("\(viewModel.roundsWon(for: player))")
-                
+            Text("\(viewModel.roundsWon[player.id] ?? "0")")
             Button(action: {
                 self.viewModel.incrementRoundsWon(for: player)
             }) {
                 Image(systemName: "plus.circle")
-                    .foregroundColor(.red)
+                    .foregroundColor(.blue)
             }
         }
     }
