@@ -30,7 +30,8 @@ extension OngoingGameCoordinator {
             case .ongoingGameDetail(let game):
                 OngoingGameDetailScreen(
                     viewModel: OngoingGameDetailScreen.ViewModel(
-                        ongoingGame: game
+                        ongoingGame: game,
+                        ongoingGameService: ongoingGameService,
                     )
                 )
             default:

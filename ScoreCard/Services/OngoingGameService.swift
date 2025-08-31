@@ -11,12 +11,10 @@ class OngoingGameService: Service {
     
     func insert(_ game: OngoingGame) {
         modelContext.insert(game)
-        try? modelContext.save()
     }
     
     func delete(_ game: OngoingGame) {
         modelContext.delete(game)
-        try? modelContext.save()
     }
     
     func fetchData() -> [OngoingGame] {
@@ -29,4 +27,3 @@ class OngoingGameService: Service {
         }
     }
 }
-

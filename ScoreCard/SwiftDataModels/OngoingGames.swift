@@ -38,3 +38,23 @@ import SwiftData
     }
     
 }
+
+extension OngoingGame {
+    convenience init(ongoingGame: OngoingGame, rounds: [UUID: String]) {
+        self.init(
+            name: ongoingGame.name,
+            game: ongoingGame.game,
+            players: ongoingGame.players,
+            scores: (rounds.reduce(into: ongoingGame.scores) { partialResult, entry in
+                let (playerID, scoreString) = entry
+                if let score = Int(scoreString) {
+                    partialResult[playerID] = (partialResult[playerID] ?? 0) + score
+                }
+            }),
+            roundsPlayed: (rounds.values.map { Int($0) ?? 0 }.reduce(0, +)),
+            id: ongoingGame.id
+        )
+        
+    }
+}
+        

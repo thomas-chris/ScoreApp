@@ -8,6 +8,14 @@ struct OngoingGameDetailScreen: View {
         self.viewModel = viewModel
     }
     
+    var saveImage: Image {
+        if viewModel.hasUnsavedChanges {
+            return Image(systemName: "opticaldisc")
+        } else {
+            return Image(systemName: "opticaldisc.fill")
+        }
+    }
+    
     var body: some View {
         ScrollView {
             if viewModel.hasUnsavedChanges {
@@ -22,6 +30,14 @@ struct OngoingGameDetailScreen: View {
                 case .rounds(let rounds):
                     roundsView(rounds: rounds)
             }
+                
+        }
+        .toolbar {
+            Button(action: {
+                viewModel.saveGame()
+            }, label: {
+                saveImage
+            })
         }
         .navigationTitle(viewModel.ongoingGame.name)
         .navigationBarTitleDisplayMode(.inline)
@@ -33,19 +49,39 @@ extension OngoingGameDetailScreen {
         Text("High Score Wins View")
     }
     
+    
+}
+
+// MARK: - Rounds View
+
+extension OngoingGameDetailScreen {
+    
     @ViewBuilder
     func roundsView(rounds: Int) -> some View {
+        if viewModel.ongoingGame.isFinished {
+            Text("Game Finished")
+                .font(.title)
+                .foregroundColor(.green)
+        }
+        
+        table(rounds: rounds)
+            
+    }
+    
+    @ViewBuilder
+    func table(rounds: Int) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             // Header row
             HStack {
                 Text("")
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+                Divider()
                 ForEach(viewModel.ongoingGame.players, id: \.id) { player in
                     Text(player.name)
                         .font(.headline)
                         .frame(maxWidth: .infinity, alignment: .center)
+                    Divider()
                 }
             }
             .padding(.horizontal)
@@ -56,15 +92,18 @@ extension OngoingGameDetailScreen {
             HStack {
                 Text("Number of rounds won")
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+                Divider()
                 ForEach(viewModel.ongoingGame.players, id: \.id) { player in
                     quantityStepper(player: player)
                         .frame(maxWidth: .infinity, alignment: .center)
+                    Divider()
                 }
             }
             .padding(.horizontal)
         }
         .frame(maxHeight: 400)
+        .padding()
+        .disabled(viewModel.ongoingGame.isFinished)
     }
     
     @ViewBuilder

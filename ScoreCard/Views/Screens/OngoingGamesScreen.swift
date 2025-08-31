@@ -27,6 +27,9 @@ struct OngoingGamesScreen: View {
             ) {
                 ForEach(viewModel?.completedGames ?? [], id: \.id) { game in
                     Text(game.name)
+                        .onTapGesture {
+                            viewModel?.show(game)
+                        }
                 }
                 .onDelete { offsets in
                     viewModel?.deleteCompleted(at: offsets)
