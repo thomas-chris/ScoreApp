@@ -19,6 +19,10 @@ class GameService: Service {
         try? modelContext.save()
     }
     
+    func delete(with id: UUID) {
+        
+    }
+    
     func fetchData() -> [Game] {
         do {
             let descriptor = FetchDescriptor<Game>(sortBy: [SortDescriptor(\.name)])

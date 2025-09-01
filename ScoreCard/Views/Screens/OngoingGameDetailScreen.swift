@@ -103,7 +103,7 @@ extension OngoingGameDetailScreen {
         }
         .frame(maxHeight: 400)
         .padding()
-        .disabled(viewModel.ongoingGame.isFinished)
+        .disabled(viewModel.ongoingGame.isFinished && viewModel.hasUnsavedChanges == false)
     }
     
     @ViewBuilder

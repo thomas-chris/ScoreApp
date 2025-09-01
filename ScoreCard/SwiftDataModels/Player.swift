@@ -5,11 +5,12 @@ import SwiftData
     
     @Attribute(.unique) var id: UUID
     var name: String
-    var attachedGames: [OngoingGame] = []
+    @Relationship(deleteRule: .cascade, inverse: \OngoingGame.players) var attachedGames: [OngoingGame]
     
-    init(name: String, id: UUID = UUID()) {
+    init(name: String, id: UUID = UUID(), attachedGames: [OngoingGame] = []) {
         self.name = name
         self.id = id
+        self.attachedGames = attachedGames
     }
     
     func attach(_ game: OngoingGame) {

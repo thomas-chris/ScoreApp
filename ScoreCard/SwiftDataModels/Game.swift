@@ -11,11 +11,18 @@ protocol HasName: Identifiable, Hashable {
     @Attribute(.unique) var id: UUID
     var name: String
     var ruleSet: RuleSet
+    @Relationship(deleteRule: .cascade, inverse: \OngoingGame.game) var ongoingGames: [OngoingGame]
     
-    init(name: String, id: UUID = UUID(), ruleSet: RuleSet) {
+    init(
+        name: String,
+        id: UUID = UUID(),
+        ruleSet: RuleSet,
+        ongoingGames: [OngoingGame] = []
+    ) {
         self.name = name
         self.id = id
         self.ruleSet = ruleSet
+        self.ongoingGames = ongoingGames
     }
     
 }

@@ -1,4 +1,6 @@
 #if DEBUG
+import Foundation
+
 class PreviewPlayerService: Service {
 
     typealias T = Player
@@ -13,6 +15,10 @@ class PreviewPlayerService: Service {
         returns.fetchData.removeAll { $0.id == item.id }
     }
     
+    func delete(with id: UUID) {
+        invocations.deleteWithID.append(id)
+    }
+    
     func fetchData() -> [Player] {
         invocations.fetchData += 1
         return returns.fetchData
@@ -21,6 +27,7 @@ class PreviewPlayerService: Service {
     struct Invocations {
         var insert: [Player] = []
         var delete: [Player] = []
+        var deleteWithID: [UUID] = []
         var fetchData: Int = 0
     }
     

@@ -34,10 +34,10 @@ extension OngoingGameDetailScreen.ViewModel {
         // doing a delete then an insert, as I am not using the model context directly.
         // Seems like SwiftData and ViewModels don't interact well for updates - SwiftData models want to be the ViewModel. But that doesn't play nice with the other stuff you want in a view model
         // doing them with a gap also seems to make the app behave better - not sure why
-        let newOngoingGame = OngoingGame(ongoingGame: ongoingGame, rounds: roundsWon)
-        ongoingGameService.delete(ongoingGame)
-        ongoingGame = newOngoingGame
-        ongoingGameService.insert(newOngoingGame)
+        
+        ongoingGameService.delete(with: ongoingGame.id)
+        ongoingGameService.insert(ongoingGame)
+        ongoingGame = ongoingGameService.fetchData().first(where: { $0.id == ongoingGame.id }) ?? ongoingGame
         hasUnsavedChanges = false
     }
 }
@@ -46,15 +46,20 @@ extension OngoingGameDetailScreen.ViewModel {
 // Mark: Rounds functions
 extension OngoingGameDetailScreen.ViewModel {
     func incrementRoundsWon(for player: Player) {
-        hasUnsavedChanges = true
+
         let newScore = ((Int(roundsWon[player.id] ?? "0") ?? 0) + 1).description
         roundsWon[player.id] = newScore
+        ongoingGame = OngoingGame(ongoingGame: ongoingGame, rounds: roundsWon)
+        hasUnsavedChanges = true
+
     }
     
     func decrementRoundsWon(for player: Player) {
-        hasUnsavedChanges = true
         let newScore = ((Int(roundsWon[player.id] ?? "0") ?? 0) - 1).description
         roundsWon[player.id] = newScore
+        ongoingGame = OngoingGame(ongoingGame: ongoingGame, rounds: roundsWon)
+        hasUnsavedChanges = true
+        
     }
     
     func roundsWon(for player: Player) -> String {

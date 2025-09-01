@@ -43,14 +43,21 @@ extension GameScreen {
             let scores = selectedPlayers.reduce(into: [UUID: Int]()) { dict, player in
                 dict[player.id] = 0
             }
+            
+            let ongoingGame = OngoingGame(
+                name: "\(game.name): \(selectedPlayers.map { $0.name }.joined(separator: ", "))",
+                game: game,
+                players: Array(selectedPlayers),
+                scores: scores,
+                roundsPlayed: 0
+            )
+            
             ongoingGameService.insert(
-                OngoingGame(
-                    name: "\(game.name): \(selectedPlayers.map { $0.name }.joined(separator: ", "))",
-                    game: game,
-                    players: Array(selectedPlayers),
-                    scores: scores,
-                    roundsPlayed: 0
-                )
+                ongoingGame
+            )
+            
+            game.ongoingGames.append(
+                ongoingGame
             )
             
             coordinator?.pop()

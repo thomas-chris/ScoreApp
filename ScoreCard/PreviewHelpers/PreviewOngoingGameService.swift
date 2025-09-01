@@ -15,6 +15,10 @@ class PreviewOngoingGameService: Service {
         returns.fetchData.removeAll { $0.id == item.id }
     }
     
+    func delete(with id: UUID) {
+        invocations.deleteWithID.append(id)
+    }
+    
     func fetchData() -> [OngoingGame] {
         invocations.fetchData += 1
         return returns.fetchData
@@ -23,6 +27,7 @@ class PreviewOngoingGameService: Service {
     struct Invocations {
         var insert: [OngoingGame] = []
         var delete: [OngoingGame] = []
+        var deleteWithID: [UUID] = []
         var fetchData: Int = 0
     }
     
