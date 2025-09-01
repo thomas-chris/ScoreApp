@@ -1,3 +1,4 @@
+import Foundation
 @testable import ScoreCard
 
 class MockPlayerService: Service {
@@ -14,6 +15,10 @@ class MockPlayerService: Service {
     func fetchData() -> [ScoreCard.Player] {
         invocations.fetchData += 1
         return returns.fetchData
+    }
+    
+    func delete(with id: UUID) {
+        
     }
     
     typealias T = Player

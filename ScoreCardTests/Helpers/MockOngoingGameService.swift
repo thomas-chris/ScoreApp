@@ -1,3 +1,4 @@
+import Foundation
 @testable import ScoreCard
 
 class MockOngoingGameService: Service {
@@ -16,11 +17,16 @@ class MockOngoingGameService: Service {
         return returns.fetchData
     }
     
+    func delete(with id: UUID) {
+        invocations.deleteWithID.append(id)
+    }
+    
     typealias T = OngoingGame
     
     struct Invocations {
         var insert: [OngoingGame] = []
         var delete: [OngoingGame] = []
+        var deleteWithID: [UUID] = []
         var fetchData: Int = 0
     }
     
