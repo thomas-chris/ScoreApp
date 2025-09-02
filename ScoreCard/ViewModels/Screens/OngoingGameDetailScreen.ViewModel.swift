@@ -7,12 +7,18 @@ extension OngoingGameDetailScreen {
         
         @Published var animateWinner: Bool = false
         @Published var ongoingGame: OngoingGame
+        @Published var hasUnsavedChanges = false
         @Published var roundsWon: [UUID: String] = [:] {
             willSet {
                 objectWillChange.send()
             }
         }
-        @Published var hasUnsavedChanges = false
+        
+        @Published var scoringRounds: [Int: [UUID: Int]] = [:] {
+            willSet {
+                objectWillChange.send()
+            }
+        }
         
         var winnersName: String? {
             if ongoingGame.isFinished {
@@ -44,6 +50,7 @@ extension OngoingGameDetailScreen {
             for player in ongoingGame.players {
                 roundsWon[player.id] = ongoingGame.scores[player.id]?.description ?? "0"
             }
+            self.scoringRounds = ongoingGame.scoringRounds
         }
     }
 }
@@ -89,3 +96,18 @@ extension OngoingGameDetailScreen.ViewModel {
         return roundsWon[player.id] ?? "0"
     }
 }
+
+// Mark: Score Funcions
+extension OngoingGameDetailScreen.ViewModel {
+    
+    
+    func addRound() {
+        let highestKeyscoringRounds = scoringRounds.keys.max() ?? -1
+        var round = [UUID: Int]()
+        ongoingGame.players.forEach { player in
+            round[player.id] = 0
+        }
+        scoringRounds[highestKeyscoringRounds + 1] = round
+    }
+}
+

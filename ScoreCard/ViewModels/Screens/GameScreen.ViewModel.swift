@@ -49,7 +49,8 @@ extension GameScreen {
                 game: game,
                 players: Array(selectedPlayers),
                 scores: scores,
-                roundsPlayed: 0
+                roundsPlayed: 0,
+                scoringRounds: [:]
             )
             
             ongoingGameService.insert(

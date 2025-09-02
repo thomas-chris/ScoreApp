@@ -25,8 +25,8 @@ struct OngoingGameDetailScreen: View {
             switch viewModel.ongoingGame.game.ruleSet.gameType {
                 case .highScoreWins:
                     highScoreWinsView
-                case .lowScoreWins:
-                    Text("Low Score Wins View")
+                case .lowScoreWins(let score):
+                    lowScoreWinsView(score: score)
                 case .rounds(let rounds):
                     roundsView(rounds: rounds)
             }
@@ -38,6 +38,15 @@ struct OngoingGameDetailScreen: View {
             }, label: {
                 saveImage
             })
+            
+            if case .lowScoreWins = viewModel.ongoingGame.game.ruleSet.gameType {
+                Button(action: {
+                    viewModel.addRound()
+                }, label: {
+                    Image(systemName: "plus.circle")
+                })
+            }
+            
         }
         .navigationTitle(viewModel.ongoingGame.name)
         .navigationBarTitleDisplayMode(.inline)
@@ -45,9 +54,7 @@ struct OngoingGameDetailScreen: View {
 }
 
 extension OngoingGameDetailScreen {
-    var highScoreWinsView: some View {
-        Text("High Score Wins View")
-    }
+    
     
     
 }
@@ -58,8 +65,8 @@ extension OngoingGameDetailScreen {
     
     @ViewBuilder
     func roundsView(rounds: Int) -> some View {
-        table(rounds: rounds)
-            
+        roundsTable(rounds: rounds)
+        
         
         if viewModel.ongoingGame.isFinished {
             WinnersView(
@@ -79,7 +86,7 @@ extension OngoingGameDetailScreen {
     }
     
     @ViewBuilder
-    func table(rounds: Int) -> some View {
+    func roundsTable(rounds: Int) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             // Header row
             HStack {
@@ -135,4 +142,70 @@ extension OngoingGameDetailScreen {
             }
         }
     }
+}
+
+// MARK: - High Score Wins View
+
+extension OngoingGameDetailScreen {
+    var highScoreWinsView: some View {
+        Text("High Score Wins View")
+    }
+}
+
+// MARK: - Low Score Wins View
+
+extension OngoingGameDetailScreen {
+    @ViewBuilder
+    func lowScoreWinsView(score: Int) -> some View {
+        scoreTable(score: score)
+    }
+    
+    @ViewBuilder
+    func scoreTable(score: Int) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            // Header row
+            HStack {
+                Text("")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Divider()
+                ForEach(viewModel.ongoingGame.players.sorted(by: { player1, player2 in
+                    player1.id.uuidString < player2.id.uuidString
+                }), id: \.id) { player in
+                    Text(player.name)
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    Divider()
+                }
+            }
+            Divider()
+            scoringRows()
+            
+        }
+        .padding(.horizontal)
+    }
+    
+    @ViewBuilder
+    func scoringRows() -> some View {
+        ForEach(Array(viewModel.scoringRounds.keys.sorted()), id: \.self) { key in
+            HStack {
+                Text("Round \(key)")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                Divider()
+                scoringScores(key: key)
+                
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func scoringScores(key: Int) -> some View {
+        ForEach(Array(viewModel.scoringRounds[key]?.keys.sorted() ?? []), id: \.self) { playerId in
+            Text("\(viewModel.scoringRounds[key]?[playerId] ?? 3)" )
+                .frame(maxWidth: .infinity, alignment: .center)
+            Divider()
+        }
+    }
+    
 }

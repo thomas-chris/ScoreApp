@@ -49,14 +49,16 @@ class PreviewOngoingGameService: Service {
                     game: .init(name: "Chess", ruleSet: .init(gameType: .rounds(1), minNumberOfPlayers: 2, maxNumberOfPlayers: 2)),
                     players: players,
                     scores: scores,
-                    roundsPlayed: 0
+                    roundsPlayed: 0,
+                    scoringRounds: [:]
                 ),
                 OngoingGame(
                     name: "Chess - Game 1",
                     game: .init(name: "Chess", ruleSet: .init(gameType: .rounds(1), minNumberOfPlayers: 2, maxNumberOfPlayers: 2)),
                     players: players,
                     scores: scores,
-                    roundsPlayed: 1
+                    roundsPlayed: 1,
+                    scoringRounds: [:]
                 ),
                 OngoingGame(
                     name: "Dominoes",
@@ -70,7 +72,8 @@ class PreviewOngoingGameService: Service {
                     ),
                     players: players,
                     scores: scores,
-                    roundsPlayed: 0
+                    roundsPlayed: 0,
+                    scoringRounds: [:]
                 )
             ]
         }

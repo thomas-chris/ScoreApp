@@ -8,7 +8,7 @@ import SwiftData
     var players: [Player]
     var scores: [UUID: Int] // Dictionary with Player ID as key and score as value
     var roundsPlayed: Int
-
+    var scoringRounds: [Int: [UUID: Int]]
     var name: String
     
     var isFinished: Bool {
@@ -27,6 +27,7 @@ import SwiftData
         players: [Player],
         scores: [UUID: Int],
         roundsPlayed: Int,
+        scoringRounds: [Int: [UUID: Int]],
         id: UUID = UUID()
     ) {
         self.name = name
@@ -34,6 +35,7 @@ import SwiftData
         self.players = players
         self.roundsPlayed = roundsPlayed
         self.scores = scores
+        self.scoringRounds = scoringRounds
         self.id = id
     }
     
@@ -52,6 +54,7 @@ extension OngoingGame {
                 }
             }),
             roundsPlayed: (rounds.values.map { Int($0) ?? 0 }.reduce(0, +)),
+            scoringRounds: ongoingGame.scoringRounds,
             id: ongoingGame.id
         )
         
