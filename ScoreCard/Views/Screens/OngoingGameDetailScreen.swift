@@ -30,7 +30,7 @@ struct OngoingGameDetailScreen: View {
                 case .rounds(let rounds):
                     roundsView(rounds: rounds)
             }
-                
+            
         }
         .toolbar {
             Button(action: {
@@ -58,14 +58,24 @@ extension OngoingGameDetailScreen {
     
     @ViewBuilder
     func roundsView(rounds: Int) -> some View {
-        if viewModel.ongoingGame.isFinished {
-            Text("Game Finished")
-                .font(.title)
-                .foregroundColor(.green)
-        }
-        
         table(rounds: rounds)
             
+        
+        if viewModel.ongoingGame.isFinished {
+            WinnersView(
+                winnersName: viewModel.winnersName ?? "",
+                animate: $viewModel.animateWinner
+            )
+            .onChange(of: viewModel.ongoingGame.isFinished) { _, _ in
+                viewModel.animateWinner = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
+                    withAnimation(.spring(response: 0.45, dampingFraction: 0.45, blendDuration: 0)) {
+                        viewModel.animateWinner = true
+                    }
+                }
+            }
+        }
+        
     }
     
     @ViewBuilder

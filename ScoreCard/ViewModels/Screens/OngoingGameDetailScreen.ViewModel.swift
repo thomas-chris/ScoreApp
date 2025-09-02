@@ -5,6 +5,7 @@ extension OngoingGameDetailScreen {
     // Can't use @Observalbe macro here, as the dictionary being changed doesn't trigger a redraw automatically, so need to call objectWillChange.send() manually
     class ViewModel: ObservableObject {
         
+        @Published var animateWinner: Bool = false
         @Published var ongoingGame: OngoingGame
         @Published var roundsWon: [UUID: String] = [:] {
             willSet {
@@ -12,6 +13,28 @@ extension OngoingGameDetailScreen {
             }
         }
         @Published var hasUnsavedChanges = false
+        
+        var winnersName: String? {
+            if ongoingGame.isFinished {
+                switch ongoingGame.game.ruleSet.gameType {
+                    case .highScoreWins(let score):
+                        break
+                    case .lowScoreWins(let score):
+                        break
+                    case .rounds(let rounds):
+                        guard
+                            let uuid = roundsWon.first(where: { $0.value == String(rounds) })?.key,
+                            let player = ongoingGame.players.first(where: { $0.id == uuid })
+                        else {
+                            return nil
+                        }
+                        
+                        return player.name
+                }
+            }
+            
+            return nil
+        }
         
         let ongoingGameService: any Service<OngoingGame>
         
