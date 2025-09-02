@@ -35,14 +35,17 @@ struct OngoingGamesScreen_ViewModelTests {
             ),
             players: [player1, player2],
             scores: [:],
-            roundsPlayed: 0
+            roundsPlayed: 0,
+            scoringRounds: [:]
         )
         let ongoingGame2 = OngoingGame(
             name: "Game2",
             game: Game(name: "Game2", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4)),
             players: [player1, player2],
             scores: [:],
-            roundsPlayed: 0
+            roundsPlayed: 0,
+            scoringRounds: [:]
+            
         )
         let finishedGame = OngoingGame(
             name: "FinishedGame",
@@ -59,7 +62,8 @@ struct OngoingGamesScreen_ViewModelTests {
                 player1.id: 10,
                 player2.id: 5
             ],
-            roundsPlayed: 15
+            roundsPlayed: 15,
+            scoringRounds: [:]
         )
         
         viewModel.games = [ongoingGame1, finishedGame, ongoingGame2]
@@ -95,7 +99,8 @@ struct OngoingGamesScreen_ViewModelTests {
                 player1.id: 4,
                 player2.id: 2
             ],
-            roundsPlayed: 0
+            roundsPlayed: 0,
+            scoringRounds: [:]
         )
         let finishedGame1 = OngoingGame(
             name: "FinishedGame1",
@@ -114,7 +119,8 @@ struct OngoingGamesScreen_ViewModelTests {
                 player1.id: 11,
                 player2.id: 7
             ],
-            roundsPlayed: 15
+            roundsPlayed: 15,
+            scoringRounds: [:]
         )
         let finishedGame2 = OngoingGame(
             name: "FinishedGame2",
@@ -130,7 +136,8 @@ struct OngoingGamesScreen_ViewModelTests {
             ),
             players: [player1, player2],
             scores: [:],
-            roundsPlayed: 15
+            roundsPlayed: 15,
+            scoringRounds: [:]
         )
         
         viewModel.games = [ongoingGame, finishedGame1, finishedGame2]
@@ -156,7 +163,8 @@ struct OngoingGamesScreen_ViewModelTests {
                 player1.id: 12,
                 player2.id: 8
             ],
-            roundsPlayed: 15
+            roundsPlayed: 15,
+            scoringRounds: [:]
         )
         let finishedGame2 = OngoingGame(
             name: "FinishedGame2",
@@ -166,7 +174,8 @@ struct OngoingGamesScreen_ViewModelTests {
                 player1.id:10,
                 player2.id:5
                 ],
-            roundsPlayed: 15
+            roundsPlayed: 15,
+            scoringRounds: [:]
         )
         
         viewModel.games = [finishedGame1, finishedGame2]
@@ -185,14 +194,16 @@ struct OngoingGamesScreen_ViewModelTests {
             game: Game(name: "OngoingGame1", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4)),
             players: [],
             scores: [:],
-            roundsPlayed: 0
+            roundsPlayed: 0,
+            scoringRounds: [:]
         )
         let ongoingGame2 = OngoingGame(
             name: "OngoingGame2",
             game: Game(name: "OngoingGame2", ruleSet: RuleSet(gameType: .highScoreWins(10), minNumberOfPlayers: 2, maxNumberOfPlayers: 4)),
             players: [],
             scores: [:],
-            roundsPlayed: 0
+            roundsPlayed: 0,
+            scoringRounds: [:]
         )
         
         viewModel.games = [ongoingGame1, ongoingGame2]
@@ -219,7 +230,8 @@ struct OngoingGamesScreen_ViewModelTests {
                 ),
                 players: [],
                 scores: [:],
-                roundsPlayed: 0
+                roundsPlayed: 0,
+                scoringRounds: [:]
             ),
             OngoingGame(
                 name: "Game2",
@@ -233,7 +245,8 @@ struct OngoingGamesScreen_ViewModelTests {
                 ),
                 players: [],
                 scores: [:],
-                roundsPlayed: 15
+                roundsPlayed: 15,
+                scoringRounds: [:]
             )
         ]
         mockService.returns.fetchData = mockGames
@@ -264,7 +277,8 @@ struct OngoingGamesScreen_ViewModelTests {
             ),
             players: [],
             scores: [:],
-            roundsPlayed: 0
+            roundsPlayed: 0,
+            scoringRounds: [:]
         )]
         
         // Service returns empty array

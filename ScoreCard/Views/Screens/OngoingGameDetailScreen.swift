@@ -33,18 +33,20 @@ struct OngoingGameDetailScreen: View {
             
         }
         .toolbar {
-            Button(action: {
-                viewModel.saveGame()
-            }, label: {
-                saveImage
-            })
-            
+            if case .rounds = viewModel.ongoingGame.game.ruleSet.gameType {
+                Button(action: {
+                    viewModel.saveGame()
+                }, label: {
+                    saveImage
+                })
+            }
             if case .lowScoreWins = viewModel.ongoingGame.game.ruleSet.gameType {
                 Button(action: {
                     viewModel.addRound()
                 }, label: {
                     Image(systemName: "plus.circle")
                 })
+                .disabled(viewModel.hasUnsavedChanges || viewModel.ongoingGame.isFinished)
             }
             
         }
@@ -54,19 +56,8 @@ struct OngoingGameDetailScreen: View {
 }
 
 extension OngoingGameDetailScreen {
-    
-    
-    
-}
-
-// MARK: - Rounds View
-
-extension OngoingGameDetailScreen {
-    
     @ViewBuilder
-    func roundsView(rounds: Int) -> some View {
-        roundsTable(rounds: rounds)
-        
+    func winersView() -> some View {
         
         if viewModel.ongoingGame.isFinished {
             WinnersView(
@@ -82,7 +73,17 @@ extension OngoingGameDetailScreen {
                 }
             }
         }
-        
+    }
+}
+
+// MARK: - Rounds View
+
+extension OngoingGameDetailScreen {
+    
+    @ViewBuilder
+    func roundsView(rounds: Int) -> some View {
+        roundsTable(rounds: rounds)
+        winersView()
     }
     
     @ViewBuilder
@@ -158,6 +159,7 @@ extension OngoingGameDetailScreen {
     @ViewBuilder
     func lowScoreWinsView(score: Int) -> some View {
         scoreTable(score: score)
+        winersView()
     }
     
     @ViewBuilder
@@ -165,7 +167,7 @@ extension OngoingGameDetailScreen {
         VStack(alignment: .leading, spacing: 10) {
             // Header row
             HStack {
-                Text("")
+                Text("Round")
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Divider()
@@ -180,32 +182,58 @@ extension OngoingGameDetailScreen {
             }
             Divider()
             scoringRows()
-            
+            Divider()
+            HStack {
+                Text("Total")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Divider()
+                ForEach(viewModel.ongoingGame.players.sorted(by: { player1, player2 in
+                    player1.id.uuidString < player2.id.uuidString
+                }), id: \.id) { player in
+                    Text("\(viewModel.ongoingGame.scores[player.id] ?? 0)")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    Divider()
+                }
+            }
         }
         .padding(.horizontal)
     }
     
     @ViewBuilder
     func scoringRows() -> some View {
-        ForEach(Array(viewModel.scoringRounds.keys.sorted()), id: \.self) { key in
+        ForEach(Array(viewModel.ongoingGame.scoringRounds.keys.sorted()), id: \.self) { key in
             HStack {
-                Text("Round \(key)")
+                Text("\(key)")
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .center)
                 Divider()
-                scoringScores(key: key)
+                if let row = viewModel.ongoingGame.scoringRounds[key] {
+                    scoringScores(row: row, key: key)
+                }
                 
             }
         }
     }
     
     @ViewBuilder
-    func scoringScores(key: Int) -> some View {
-        ForEach(Array(viewModel.scoringRounds[key]?.keys.sorted() ?? []), id: \.self) { playerId in
-            Text("\(viewModel.scoringRounds[key]?[playerId] ?? 3)" )
-                .frame(maxWidth: .infinity, alignment: .center)
-            Divider()
-        }
+    func scoringScores(row: [UUID: String], key: Int) -> some View {
+        
+        ForEach(Array(row.keys.sorted()), id: \.self) { playerId in
+                TextField("0", text:  binding(for: key, uuid: playerId))
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .onChange(of: binding(for: key, uuid: playerId).wrappedValue) { _, _ in
+                        viewModel.updateScores()
+                    }
+                Divider()
+            }
     }
     
+    private func binding(for key: Int, uuid: UUID) -> Binding<String> {
+        return .init(
+            get: { self.viewModel.ongoingGame.scoringRounds[key, default: [:]][uuid, default: "0"] },
+            set: { self.viewModel.ongoingGame.scoringRounds[key]?[uuid] = $0 }
+            )
+    }
 }

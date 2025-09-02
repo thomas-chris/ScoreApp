@@ -6,15 +6,13 @@ extension OngoingGameDetailScreen {
     class ViewModel: ObservableObject {
         
         @Published var animateWinner: Bool = false
-        @Published var ongoingGame: OngoingGame
-        @Published var hasUnsavedChanges = false
-        @Published var roundsWon: [UUID: String] = [:] {
+        @Published var ongoingGame: OngoingGame {
             willSet {
                 objectWillChange.send()
             }
         }
-        
-        @Published var scoringRounds: [Int: [UUID: Int]] = [:] {
+        @Published var hasUnsavedChanges = false
+        @Published var roundsWon: [UUID: String] = [:] {
             willSet {
                 objectWillChange.send()
             }
@@ -23,10 +21,15 @@ extension OngoingGameDetailScreen {
         var winnersName: String? {
             if ongoingGame.isFinished {
                 switch ongoingGame.game.ruleSet.gameType {
-                    case .highScoreWins(let score):
+                    case .highScoreWins:
                         break
-                    case .lowScoreWins(let score):
-                        break
+                    case .lowScoreWins:
+                        guard let lowScore = ongoingGame.scores.values.min() else { return nil }
+                        let players = ongoingGame.scores.filter { $0.value == lowScore }.map { $0.key }.compactMap { uuid in
+                            ongoingGame.players.first(where: { $0.id == uuid })?.name
+                        }
+                        return players.joined(separator: ", ")
+                              
                     case .rounds(let rounds):
                         guard
                             let uuid = roundsWon.first(where: { $0.value == String(rounds) })?.key,
@@ -50,7 +53,6 @@ extension OngoingGameDetailScreen {
             for player in ongoingGame.players {
                 roundsWon[player.id] = ongoingGame.scores[player.id]?.description ?? "0"
             }
-            self.scoringRounds = ongoingGame.scoringRounds
         }
     }
 }
@@ -102,12 +104,18 @@ extension OngoingGameDetailScreen.ViewModel {
     
     
     func addRound() {
-        let highestKeyscoringRounds = scoringRounds.keys.max() ?? -1
-        var round = [UUID: Int]()
+        hasUnsavedChanges = true
+        let highestKeyscoringRounds = ongoingGame.scoringRounds.keys.max() ?? -1
+        var round = [UUID: String]()
         ongoingGame.players.forEach { player in
-            round[player.id] = 0
+            round[player.id] = "0"
         }
-        scoringRounds[highestKeyscoringRounds + 1] = round
+        ongoingGame.scoringRounds[highestKeyscoringRounds + 1] = round
+    }
+    
+    func updateScores() {
+        ongoingGame.scores = ongoingGame.flattenAndSum(ongoingGame.scoringRounds)
+        hasUnsavedChanges = false
     }
 }
 

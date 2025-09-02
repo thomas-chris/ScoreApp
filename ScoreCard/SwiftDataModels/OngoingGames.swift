@@ -6,9 +6,19 @@ import SwiftData
     @Attribute(.unique) var id: UUID
     var game: Game
     var players: [Player]
-    var scores: [UUID: Int] // Dictionary with Player ID as key and score as value
+    var scores: [UUID: Int] {
+        willSet {
+            objectWillChange.send()
+        }
+    } // Dictionary with Player ID as key and score as value
     var roundsPlayed: Int
-    var scoringRounds: [Int: [UUID: Int]]
+    var scoringRounds: [Int: [UUID: String]] {
+        willSet {
+            objectWillChange.send()
+            roundsPlayed = scoringRounds.count
+            scores = flattenAndSum(scoringRounds)
+        }
+    }
     var name: String
     
     var isFinished: Bool {
@@ -27,7 +37,7 @@ import SwiftData
         players: [Player],
         scores: [UUID: Int],
         roundsPlayed: Int,
-        scoringRounds: [Int: [UUID: Int]],
+        scoringRounds: [Int: [UUID: String]],
         id: UUID = UUID()
     ) {
         self.name = name
@@ -37,6 +47,16 @@ import SwiftData
         self.scores = scores
         self.scoringRounds = scoringRounds
         self.id = id
+    }
+    
+    func flattenAndSum(_ input: [Int: [UUID: String]]) -> [UUID: Int] {
+        var result: [UUID: Int] = [:]
+        for round in input.values {
+            for (playerId, score) in round {
+                result[playerId, default: 0] += Int(score) ?? 0
+            }
+        }
+        return result
     }
     
 }
