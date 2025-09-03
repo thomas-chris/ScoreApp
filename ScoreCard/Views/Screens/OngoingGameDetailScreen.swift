@@ -16,6 +16,15 @@ struct OngoingGameDetailScreen: View {
         }
     }
     
+    var addRowButton: some View {
+        Button(action: {
+            viewModel.addRound()
+        }, label: {
+            Image(systemName: "plus.circle")
+        })
+        .disabled(viewModel.hasUnsavedChanges || viewModel.ongoingGame.isFinished)
+    }
+    
     var body: some View {
         ScrollView {
             if viewModel.hasUnsavedChanges {
@@ -23,10 +32,9 @@ struct OngoingGameDetailScreen: View {
                     .foregroundColor(.red)
             }
             switch viewModel.ongoingGame.game.ruleSet.gameType {
-                case .highScoreWins:
-                    highScoreWinsView
-                case .lowScoreWins(let score):
-                    lowScoreWinsView(score: score)
+                case .highScoreWins(let score),
+                        .lowScoreWins(let score):
+                    scoreWinsView(score: score)
                 case .rounds(let rounds):
                     roundsView(rounds: rounds)
             }
@@ -41,12 +49,11 @@ struct OngoingGameDetailScreen: View {
                 })
             }
             if case .lowScoreWins = viewModel.ongoingGame.game.ruleSet.gameType {
-                Button(action: {
-                    viewModel.addRound()
-                }, label: {
-                    Image(systemName: "plus.circle")
-                })
-                .disabled(viewModel.hasUnsavedChanges || viewModel.ongoingGame.isFinished)
+                addRowButton
+            }
+            
+            if case .highScoreWins = viewModel.ongoingGame.game.ruleSet.gameType {
+                addRowButton
             }
             
         }
@@ -57,7 +64,7 @@ struct OngoingGameDetailScreen: View {
 
 extension OngoingGameDetailScreen {
     @ViewBuilder
-    func winersView() -> some View {
+    func winnersView() -> some View {
         
         if viewModel.ongoingGame.isFinished {
             WinnersView(
@@ -83,7 +90,7 @@ extension OngoingGameDetailScreen {
     @ViewBuilder
     func roundsView(rounds: Int) -> some View {
         roundsTable(rounds: rounds)
-        winersView()
+        winnersView()
     }
     
     @ViewBuilder
@@ -145,21 +152,13 @@ extension OngoingGameDetailScreen {
     }
 }
 
-// MARK: - High Score Wins View
-
-extension OngoingGameDetailScreen {
-    var highScoreWinsView: some View {
-        Text("High Score Wins View")
-    }
-}
-
-// MARK: - Low Score Wins View
+// MARK: - Score Wins View
 
 extension OngoingGameDetailScreen {
     @ViewBuilder
-    func lowScoreWinsView(score: Int) -> some View {
+    func scoreWinsView(score: Int) -> some View {
         scoreTable(score: score)
-        winersView()
+        winnersView()
     }
     
     @ViewBuilder
@@ -221,19 +220,19 @@ extension OngoingGameDetailScreen {
     func scoringScores(row: [UUID: String], key: Int) -> some View {
         
         ForEach(Array(row.keys.sorted()), id: \.self) { playerId in
-                TextField("0", text:  binding(for: key, uuid: playerId))
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .onChange(of: binding(for: key, uuid: playerId).wrappedValue) { _, _ in
-                        viewModel.updateScores()
-                    }
-                Divider()
-            }
+            TextField("0", text:  binding(for: key, uuid: playerId))
+                .frame(maxWidth: .infinity, alignment: .center)
+                .onChange(of: binding(for: key, uuid: playerId).wrappedValue) { _, _ in
+                    viewModel.updateScores()
+                }
+            Divider()
+        }
     }
     
     private func binding(for key: Int, uuid: UUID) -> Binding<String> {
         return .init(
             get: { self.viewModel.ongoingGame.scoringRounds[key, default: [:]][uuid, default: "0"] },
             set: { self.viewModel.ongoingGame.scoringRounds[key]?[uuid] = $0 }
-            )
+        )
     }
 }

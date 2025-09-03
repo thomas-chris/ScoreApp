@@ -18,18 +18,21 @@ extension OngoingGameDetailScreen {
             }
         }
         
+        func highAndLowWinner(finishingScore: Int?) -> String? {
+            guard let score = finishingScore else { return nil }
+            let players = ongoingGame.scores.filter { $0.value == score }.map { $0.key }.compactMap { uuid in
+                ongoingGame.players.first(where: { $0.id == uuid })?.name
+            }
+            return players.joined(separator: ", ")
+        }
+        
         var winnersName: String? {
             if ongoingGame.isFinished {
                 switch ongoingGame.game.ruleSet.gameType {
                     case .highScoreWins:
-                        break
+                        return highAndLowWinner(finishingScore: ongoingGame.scores.values.max())
                     case .lowScoreWins:
-                        guard let lowScore = ongoingGame.scores.values.min() else { return nil }
-                        let players = ongoingGame.scores.filter { $0.value == lowScore }.map { $0.key }.compactMap { uuid in
-                            ongoingGame.players.first(where: { $0.id == uuid })?.name
-                        }
-                        return players.joined(separator: ", ")
-                              
+                        return highAndLowWinner(finishingScore: ongoingGame.scores.values.min())
                     case .rounds(let rounds):
                         guard
                             let uuid = roundsWon.first(where: { $0.value == String(rounds) })?.key,
